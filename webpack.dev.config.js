@@ -2,6 +2,7 @@ const { resolve } = require('path')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const config = {
   devtool: 'eval-cheap-module-source-map',
@@ -70,6 +71,7 @@ const config = {
         }
       ]
     }),
+    new ReactRefreshWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
 }

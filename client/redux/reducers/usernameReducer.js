@@ -1,7 +1,8 @@
 import {
   SET_USERNAME,
   SET_EMAIL,
-  SET_PASSWORD
+  SET_FIRST_PASSWORD,
+  SET_SECOND_PASSWORD
 } from '../actionCreators/setUserActionCreator'
 
 const userReducer = (state = {}, action) => {
@@ -12,8 +13,11 @@ const userReducer = (state = {}, action) => {
     case SET_EMAIL: {
       return { ...state, email: action.email }
     }
-    case SET_PASSWORD: {
-      return { ...state, password: action.password }
+    case SET_FIRST_PASSWORD: {
+      return { ...state, firstPassword: action.password }
+    }
+    case SET_SECOND_PASSWORD: {
+      return { ...state, secondPassword: action.password }
     }
     default:
       return state
