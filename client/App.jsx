@@ -4,13 +4,13 @@ import { Provider } from 'react-redux'
 import './main.scss'
 import store from './redux'
 // import Main from './pages/Main'
-import Registration from './pages/Registration'
+import RegistrationForm from './pages/forms/RegistrationForm'
 
 const App = () => (
   <div>
     <React.StrictMode>
       <Provider store={store}>
-        <Registration />
+        <RegistrationForm />
       </Provider>
     </React.StrictMode>
   </div>

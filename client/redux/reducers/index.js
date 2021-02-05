@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import usernameReducer from './usernameReducer'
+import userReducer from './usernameReducer'
 
-const reducer = combineReducers({ user: usernameReducer })
+const reducer = combineReducers({ user: userReducer })
 
 export default reducer
