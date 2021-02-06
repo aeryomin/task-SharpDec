@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-export const UPDATE_USERNAME = 'SET_USERNAME'
-export const UPDATE_EMAIL = 'SET_EMAIL'
-export const UPDATE_FIRST_PASSWORD = 'SET_FIRST_PASSWORD'
-export const UPDATE_SECOND_PASSWORD = 'SET_SECOND_PASSWORD'
+export const UPDATE_USERNAME = 'UPDATE_USERNAME'
+export const UPDATE_EMAIL = 'UPDATE_EMAIL'
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
+export const UPDATE_SECOND_PASSWORD = 'UPDATE_SECOND_PASSWORD'
 export const LOGIN = 'LOGIN'
 
 export const setUsernameActionCreator = (username) => ({
@@ -16,7 +16,7 @@ export const setEmailActionCreator = (email) => ({
 })
 
 export const setFirstPasswordActionCreator = (password) => ({
-  type: UPDATE_FIRST_PASSWORD,
+  type: UPDATE_PASSWORD,
   password
 })
 
@@ -25,33 +25,8 @@ export const setSecondPasswordActionCreator = (password) => ({
   password
 })
 
-// export function logIn() {
-//   return (dispatch, getState) => {
-//     console.log('click')
-
-//     const { username, firstPassword } = getState().account
-
-//     fetch('/api/v1/auth', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify({
-//         username,
-//         firstPassword
-//       })
-//     })
-//       .then((r) => r.json())
-//       .then((data) => {
-//         dispatch({ type: LOGIN, token: data.token })
-//       })
-//   }
-// }
-
 export const logIn = () => async (dispatch, getState) => {
-  console.log('click')
-
-  const { username, firstPassword } = getState().account
+  const { email, password } = getState().account
 
   const response = await fetch('/api/v1/auth', {
     method: 'POST',
@@ -59,11 +34,12 @@ export const logIn = () => async (dispatch, getState) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username,
-      firstPassword
+      email,
+      password
     })
   })
 
-  const user = response.json()
-  console.log(user)
+  const user = await response.json()
+
+  dispatch({ type: LOGIN, token: user.token })
 }

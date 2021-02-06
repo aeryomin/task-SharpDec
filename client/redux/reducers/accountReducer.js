@@ -1,7 +1,7 @@
 import {
   UPDATE_USERNAME,
   UPDATE_EMAIL,
-  UPDATE_FIRST_PASSWORD,
+  UPDATE_PASSWORD,
   UPDATE_SECOND_PASSWORD,
   LOGIN
 } from '../actionCreators/accountActionCreator'
@@ -9,12 +9,12 @@ import {
 const initialState = {
   username: '',
   email: '',
-  firstPassword: '',
+  password: '',
   secondPasword: '',
   token: ''
 }
 
-const userReducer = (state = initialState, action) => {
+const accountReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USERNAME: {
       return { ...state, username: action.username }
@@ -22,8 +22,8 @@ const userReducer = (state = initialState, action) => {
     case UPDATE_EMAIL: {
       return { ...state, email: action.email }
     }
-    case UPDATE_FIRST_PASSWORD: {
-      return { ...state, firstPassword: action.password }
+    case UPDATE_PASSWORD: {
+      return { ...state, password: action.password }
     }
     case UPDATE_SECOND_PASSWORD: {
       return { ...state, secondPassword: action.password }
@@ -36,4 +36,4 @@ const userReducer = (state = initialState, action) => {
   }
 }
 
-export default userReducer
+export default accountReducer

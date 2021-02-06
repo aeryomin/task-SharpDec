@@ -7,8 +7,16 @@ import cookieParser from 'cookie-parser'
 import mongooseService from './services/mongoose'
 import './config'
 import authRoutes from './routes/api/auth.routes'
+import Account from './model/Account.model'
 
 mongooseService.connect()
+
+// const account = new Account({
+//   email: 'test@gmail.com',
+//   username: 'valya',
+//   password: 'abracadabra'
+// })
+// account.save()
 
 const PORT = process.env.PORT || 8090
 
