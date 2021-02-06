@@ -33,4 +33,35 @@ accountSchema.pre('save', async function (next) {
   return next()
 })
 
+accountSchema.method({
+  passwordMatches(password) {
+    // console.log(bcrypt.hashSync(password), this.password)
+    return bcrypt.compareSync(password, this.password)
+  }
+})
+
+accountSchema.statics = {
+  async findAndValidateAccount({ email, password }) {
+    if (!email) {
+      throw new Error('No Email')
+    }
+    if (!password) {
+      throw new Error('No Password')
+    }
+
+    const account = await this.findOne({ email }).exec()
+    if (!account) {
+      throw new Error('No Account')
+    }
+
+    const isPasswordOk = await account.passwordMatches(password)
+
+    if (!isPasswordOk) {
+      throw new Error('Password Incorrect')
+    }
+
+    return account
+  }
+}
+
 export default mongoose.model('accounts', accountSchema)

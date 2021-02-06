@@ -11,7 +11,8 @@ const initialState = {
   email: '',
   password: '',
   secondPasword: '',
-  token: ''
+  token: '',
+  user: {}
 }
 
 const accountReducer = (state = initialState, action) => {
@@ -29,7 +30,7 @@ const accountReducer = (state = initialState, action) => {
       return { ...state, secondPassword: action.password }
     }
     case LOGIN: {
-      return { ...state, token: action.token }
+      return { ...state, token: action.token, password: '', user: action.user }
     }
     default:
       return state

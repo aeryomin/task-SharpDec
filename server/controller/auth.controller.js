@@ -1,10 +1,19 @@
 /* eslint-disable no-console */
-// import account from '../model/Account.model'
+import jwt from 'jsonwebtoken'
+import Account from '../model/Account.model'
+import config from '../config'
 
-export function login(req, res) {
+export async function login(req, res) {
+  console.log('login func', req.body)
+
   try {
-    console.log(req.body)
-    res.send({ status: 'ok', token: 'new-token' })
+    const account = await Account.findAndValidateAccount(req.body)
+    console.log(account)
+
+    const payload = { uid: account.id }
+    const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
+
+    res.send({ status: 'ok', token })
   } catch (err) {
     res.json({ status: 'error', err })
   }

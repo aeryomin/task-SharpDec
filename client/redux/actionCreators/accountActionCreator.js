@@ -39,7 +39,7 @@ export const logIn = () => async (dispatch, getState) => {
     })
   })
 
-  const user = await response.json()
+  const account = await response.json()
 
-  dispatch({ type: LOGIN, token: user.token })
+  dispatch({ type: LOGIN, token: account.token, user: account.user })
 }
