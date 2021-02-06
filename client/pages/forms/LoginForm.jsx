@@ -6,10 +6,10 @@ import {
   setUsernameActionCreator,
   setEmailActionCreator,
   setFirstPasswordActionCreator,
-  setSecondPasswordActionCreator
+  logIn
 } from '../../redux/actionCreators/accountActionCreator'
 
-const RegistrationForm = () => {
+const LoginForm = () => {
   return (
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center">
       <div className=" max-w-xs ">
@@ -32,17 +32,11 @@ const RegistrationForm = () => {
             placeholder="Password"
             action={setFirstPasswordActionCreator}
           />
-          <FormInput
-            type="password"
-            title="Repeat password"
-            placeholder="Password"
-            action={setSecondPasswordActionCreator}
-          />
-          <Button content="Registration" action="registration" />
+          <Button content="Log In" action={logIn} />
         </form>
       </div>
     </div>
   )
 }
 
-export default RegistrationForm
+export default LoginForm

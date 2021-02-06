@@ -33,6 +33,9 @@ const FormInput = (props) => {
             dispatch(action(value))
           }
         }}
+        onBlur={() => {
+          dispatch(action(value))
+        }}
       />
     </div>
   )

@@ -3,7 +3,8 @@
   "root": true,
   "extends": ["airbnb", "plugin:react/recommended"],
   "globals": {
-    "document": true
+    "document": true,
+    "fetch": false
   },
   "rules": {
     "semi": "off",
@@ -33,6 +34,8 @@
     "jsx-a11y/no-autofocus": "warn",
     "max-classes-per-file": "warn",
     "react/jsx-props-no-spreading": ["off"],
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-unused-vars": "warn",
+    "object-curly-newline": "off"
   }
 }

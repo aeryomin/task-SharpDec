@@ -4,7 +4,11 @@ import path from 'path'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
+import mongooseService from './services/mongoose'
 import './config'
+import authRoutes from './routes/api/auth.routes'
+
+mongooseService.connect()
 
 const PORT = process.env.PORT || 8090
 
@@ -19,9 +23,7 @@ const middleware = [
 
 middleware.forEach((item) => server.use(item))
 
-server.get('/', (req, res) => {
-  res.send('Server is done')
-})
+server.use('/api/v1/auth', authRoutes)
 
 server.listen(PORT, (err) => {
   if (err) {

@@ -1,23 +1,35 @@
 import {
-  SET_USERNAME,
-  SET_EMAIL,
-  SET_FIRST_PASSWORD,
-  SET_SECOND_PASSWORD
-} from '../actionCreators/setUserActionCreator'
+  UPDATE_USERNAME,
+  UPDATE_EMAIL,
+  UPDATE_FIRST_PASSWORD,
+  UPDATE_SECOND_PASSWORD,
+  LOGIN
+} from '../actionCreators/accountActionCreator'
 
-const userReducer = (state = {}, action) => {
+const initialState = {
+  username: '',
+  email: '',
+  firstPassword: '',
+  secondPasword: '',
+  token: ''
+}
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_USERNAME: {
+    case UPDATE_USERNAME: {
       return { ...state, username: action.username }
     }
-    case SET_EMAIL: {
+    case UPDATE_EMAIL: {
       return { ...state, email: action.email }
     }
-    case SET_FIRST_PASSWORD: {
+    case UPDATE_FIRST_PASSWORD: {
       return { ...state, firstPassword: action.password }
     }
-    case SET_SECOND_PASSWORD: {
+    case UPDATE_SECOND_PASSWORD: {
       return { ...state, secondPassword: action.password }
+    }
+    case LOGIN: {
+      return { ...state, token: action.token }
     }
     default:
       return state

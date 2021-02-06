@@ -1,16 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { Switch, Route, Redirect, StaticRouter } from 'react-router-dom'
 import './main.scss'
 import store from './redux'
-// import Main from './pages/Main'
-import RegistrationForm from './pages/forms/RegistrationForm'
+// import RegistrationForm from './pages/forms/RegistrationForm'
+import LoginForm from './pages/forms/LoginForm'
 
 const App = () => (
   <div>
     <React.StrictMode>
       <Provider store={store}>
-        <RegistrationForm />
+        {/* <RegistrationForm /> */}
+        <LoginForm />
       </Provider>
     </React.StrictMode>
   </div>
