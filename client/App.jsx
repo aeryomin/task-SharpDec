@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import './main.scss'
 import store, { history } from './redux'
+import Startup from './startup'
 import Home from './pages/presentational/Home'
 import LoginForm from './pages/forms/LoginForm'
 import RegistrationForm from './pages/forms/RegistrationForm'
@@ -15,12 +16,14 @@ const App = () => (
     <React.StrictMode>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Switch>
-            <Route exact path="/" component={() => <Home />} />
-            <Route exact path="/login" component={() => <LoginForm />} />
-            <Route exact path="/reg" component={() => <RegistrationForm />} />
-            <Route exact path="/main" component={() => <Main />} />
-          </Switch>
+          <Startup>
+            <Switch>
+              <Route exact path="/" component={() => <Home />} />
+              <Route exact path="/login" component={() => <LoginForm />} />
+              <Route exact path="/reg" component={() => <RegistrationForm />} />
+              <Route exact path="/main" component={() => <Main />} />
+            </Switch>
+          </Startup>
         </ConnectedRouter>
       </Provider>
     </React.StrictMode>

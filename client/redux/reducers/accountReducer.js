@@ -1,3 +1,5 @@
+import Cookies from 'universal-cookie'
+
 import {
   UPDATE_USERNAME,
   UPDATE_EMAIL,
@@ -6,12 +8,14 @@ import {
   LOGIN
 } from '../actionCreators/accountActionCreator'
 
+const cookies = new Cookies()
+
 const initialState = {
   username: '',
   email: '',
   password: '',
   secondPasword: '',
-  token: '',
+  token: cookies.get('token'),
   user: {}
 }
 

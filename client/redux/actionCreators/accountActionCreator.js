@@ -44,6 +44,12 @@ export const logIn = () => async (dispatch, getState) => {
   const account = await response.json()
 
   dispatch({ type: LOGIN, token: account.token, user: account.user })
-  console.log(history.location)
+  history.push('/main')
+}
+
+export const tryLogIn = () => async (dispatch) => {
+  const response = await fetch('/api/v1/auth')
+  const account = await response.json()
+  dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
 }

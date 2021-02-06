@@ -3,6 +3,6 @@ import { connectRouter } from 'connected-react-router'
 import accountReducer from './accountReducer'
 
 const reducer = (history) =>
-  combineReducers({ account: accountReducer, router: connectRouter(history) })
+  combineReducers({ router: connectRouter(history), account: accountReducer })
 
 export default reducer
