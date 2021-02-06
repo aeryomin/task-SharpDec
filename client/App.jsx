@@ -8,6 +8,7 @@ import store, { history } from './redux'
 import Home from './pages/presentational/Home'
 import LoginForm from './pages/forms/LoginForm'
 import RegistrationForm from './pages/forms/RegistrationForm'
+import Main from './pages/presentational/Main'
 
 const App = () => (
   <div>
@@ -17,11 +18,8 @@ const App = () => (
           <Switch>
             <Route exact path="/" component={() => <Home />} />
             <Route exact path="/login" component={() => <LoginForm />} />
-            <Route
-              exact
-              path="/reg"
-              component={() => <RegistrationForm />}
-            />
+            <Route exact path="/reg" component={() => <RegistrationForm />} />
+            <Route exact path="/main" component={() => <Main />} />
           </Switch>
         </ConnectedRouter>
       </Provider>

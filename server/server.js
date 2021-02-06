@@ -14,9 +14,9 @@ import authRoutes from './routes/api/auth.routes'
 mongooseService.connect()
 
 // const account = new Account({
-//   email: 'test@gmail.com',
-//   username: 'valya',
-//   password: 'abracadabra'
+//   email: 'eryomin.aa@gmail.com',
+//   username: 'lex',
+//   password: 'a'
 // })
 // account.save()
 
