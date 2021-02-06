@@ -12,7 +12,8 @@ export async function login(req, res) {
 
     const payload = { uid: account.id }
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
-
+    delete account.password
+    res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.send({ status: 'ok', token })
   } catch (err) {
     res.json({ status: 'error', err })

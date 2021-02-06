@@ -19,7 +19,7 @@ const App = () => (
             <Route exact path="/login" component={() => <LoginForm />} />
             <Route
               exact
-              path="/registration"
+              path="/reg"
               component={() => <RegistrationForm />}
             />
           </Switch>
