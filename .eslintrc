@@ -40,6 +40,7 @@
     "linebreak-style": "off",
     "implicit-arrow-linebreak": "off",
     "import/no-cycle": "off",
-    "no-confusing-arrow": "off"
+    "no-confusing-arrow": "off",
+    "no-undef": "warn"
   }
 }
