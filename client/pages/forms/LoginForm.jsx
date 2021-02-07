@@ -6,7 +6,7 @@ import Button, { DO_DISPATCH } from '../../components/Button'
 import {
   setUsernameActionCreator,
   setEmailActionCreator,
-  setFirstPasswordActionCreator,
+  setPasswordActionCreator,
   logIn
 } from '../../redux/actionCreators/accountActionCreator'
 
@@ -31,9 +31,9 @@ const LoginForm = () => {
             type="password"
             title="Password"
             placeholder="Password"
-            action={setFirstPasswordActionCreator}
+            action={setPasswordActionCreator}
           />
-          <div className="flex justify-start">
+          <div className="flex justify-between">
             <Button
               content="Log In"
               action={{
@@ -41,9 +41,11 @@ const LoginForm = () => {
                 payload: logIn
               }}
             />
-            <div className="ml-4 text-gray-400 flex items-center">
+            <div className="text-gray-400 flex items-center">
               or
-              <Link className="mx-1 text-blue-600" to="/reg">Sign up</Link>
+              <Link className="mx-1 text-blue-600 hover:underline" to="/reg">
+                Sign up
+              </Link>
               for PW
             </div>
           </div>

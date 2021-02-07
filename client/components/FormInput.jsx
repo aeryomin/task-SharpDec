@@ -14,18 +14,21 @@ const FormInput = (props) => {
     <div className="mb-3">
       <label
         className="block text-gray-700 text-sm font-bold mb-1"
-        htmlFor={title}
+        htmlFor={`id-${title}`}
       >
         {title}
       </label>
       <input
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id={title}
+        id={`id-${title}`}
         type={type}
         placeholder={placeholder}
         value={value}
         onChange={(event) => {
           setValue(event.target.value)
+          if (type === 'password') {
+            dispatch(action(event.target.value))
+          }
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {

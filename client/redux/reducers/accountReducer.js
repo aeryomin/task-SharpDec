@@ -14,7 +14,7 @@ const initialState = {
   username: '',
   email: '',
   password: '',
-  secondPasword: '',
+  secondPassword: '',
   token: cookies.get('token'),
   user: null
 }

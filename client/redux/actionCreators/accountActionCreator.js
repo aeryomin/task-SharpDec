@@ -17,7 +17,7 @@ export const setEmailActionCreator = (email) => ({
   email
 })
 
-export const setFirstPasswordActionCreator = (password) => ({
+export const setPasswordActionCreator = (password) => ({
   type: UPDATE_PASSWORD,
   password
 })
@@ -52,4 +52,8 @@ export const tryLogIn = () => async (dispatch) => {
   const account = await response.json()
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
+}
+
+export const registration = () => {
+  console.log('reg')
 }

@@ -1,16 +1,33 @@
 /* eslint-disable no-console */
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import FormInput from '../../components/FormInput'
-import Button from '../../components/Button'
+import Button, { DO_FUNCTION, EMPTY } from '../../components/Button'
 import {
   setUsernameActionCreator,
   setEmailActionCreator,
-  setFirstPasswordActionCreator,
-  setSecondPasswordActionCreator
+  setPasswordActionCreator,
+  setSecondPasswordActionCreator,
+  registration
 } from '../../redux/actionCreators/accountActionCreator'
 
 const RegistrationForm = () => {
+  const { password, secondPassword } = useSelector((s) => s.account)
+
+  // const makeRegPayloadObj = (first, second) => {
+  //   return first === second ? { type: DO_FUNCTION, payload: registration } : { type: EMPTY }
+  // }
+
+  const gerPayload =
+    password === secondPassword
+      ? { type: DO_FUNCTION, payload: registration }
+      : { type: EMPTY }
+
+  const isPasswodrsMatches = () => {
+    return password === secondPassword
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center">
       <div className=" max-w-xs ">
@@ -31,7 +48,7 @@ const RegistrationForm = () => {
             type="password"
             title="Password"
             placeholder="Password"
-            action={setFirstPasswordActionCreator}
+            action={setPasswordActionCreator}
           />
           <FormInput
             type="password"
@@ -39,11 +56,18 @@ const RegistrationForm = () => {
             placeholder="Password"
             action={setSecondPasswordActionCreator}
           />
-          <div className="ml-4 text-gray-400 flex items-center">
-            <Button content="Registration" action="registration" />
-            <div className="ml-4 text-gray-400 flex items-center">
+          {isPasswodrsMatches() ? (
+            <div className="text-green-600 mb-3">Passwords matches</div>
+          ) : (
+            <div className="text-red-600 mb-3">
+              Passwords don&apos;t matches
+            </div>
+          )}
+          <div className="flex justify-between items-center">
+            <Button content="Registration" action={gerPayload} />
+            <div className="text-gray-400 flex items-center">
               or
-              <Link className="mx-1 text-blue-600" to="/login">
+              <Link className="ml-2 text-blue-600 hover:underline" to="/login">
                 Sign in
               </Link>
             </div>
