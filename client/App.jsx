@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { useSelector, Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import './main.scss'
@@ -11,6 +11,32 @@ import LoginForm from './pages/forms/LoginForm'
 import RegistrationForm from './pages/forms/RegistrationForm'
 import Main from './pages/presentational/Main'
 
+const AnonymousRoute = ({ component: Component, ...rest }) => {
+  const account = useSelector((s) => s.account)
+  const func = (props) =>
+    !!account.user && !!account.token ? (
+      <Redirect to={{ pathname: '/main' }} />
+    ) : (
+      <Component {...props} />
+    )
+  return <Route {...rest} render={func} />
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const account = useSelector((s) => s.account)
+  const func = (props) =>
+    !!account.user && !!account.token ? (
+      <Component {...props} />
+    ) : (
+      <Redirect
+        to={{
+          pathname: '/login'
+        }}
+      />
+    )
+  return <Route {...rest} render={func} />
+}
+
 const App = () => (
   <div>
     <React.StrictMode>
@@ -19,9 +45,19 @@ const App = () => (
           <Startup>
             <Switch>
               <Route exact path="/" component={() => <Home />} />
-              <Route exact path="/login" component={() => <LoginForm />} />
+              {/* <Route exact path="/login" component={() => <LoginForm />} /> */}
               <Route exact path="/reg" component={() => <RegistrationForm />} />
-              <Route exact path="/main" component={() => <Main />} />
+              {/* <Route exact path="/main" component={() => <Main />} /> */}
+              <AnonymousRoute
+                exact
+                path="/login"
+                component={() => <LoginForm />}
+              />
+              <PrivateRoute
+                exact
+                path="/main"
+                component={() => <Main />}
+              />
             </Switch>
           </Startup>
         </ConnectedRouter>
