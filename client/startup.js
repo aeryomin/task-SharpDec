@@ -6,7 +6,7 @@ const Startup = (props) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // dispatch(tryLogIn())
+    dispatch(tryLogIn())
   }, [])
 
   return props.children

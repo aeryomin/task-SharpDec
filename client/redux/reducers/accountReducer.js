@@ -16,7 +16,7 @@ const initialState = {
   password: '',
   secondPasword: '',
   token: cookies.get('token'),
-  user: {}
+  user: null
 }
 
 const accountReducer = (state = initialState, action) => {

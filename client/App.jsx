@@ -45,9 +45,7 @@ const App = () => (
           <Startup>
             <Switch>
               <Route exact path="/" component={() => <Home />} />
-              {/* <Route exact path="/login" component={() => <LoginForm />} /> */}
               <Route exact path="/reg" component={() => <RegistrationForm />} />
-              {/* <Route exact path="/main" component={() => <Main />} /> */}
               <AnonymousRoute
                 exact
                 path="/login"
