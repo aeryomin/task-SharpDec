@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
+import { Link } from 'react-router-dom'
 import FormInput from '../../components/FormInput'
 import Button from '../../components/Button'
 import {
@@ -38,7 +39,15 @@ const RegistrationForm = () => {
             placeholder="Password"
             action={setSecondPasswordActionCreator}
           />
-          <Button content="Registration" action="registration" />
+          <div className="ml-4 text-gray-400 flex items-center">
+            <Button content="Registration" action="registration" />
+            <div className="ml-4 text-gray-400 flex items-center">
+              or
+              <Link className="mx-1 text-blue-600" to="/login">
+                Sign in
+              </Link>
+            </div>
+          </div>
         </form>
       </div>
     </div>

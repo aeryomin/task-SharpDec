@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import React from 'react'
+import { Link } from 'react-router-dom'
 import FormInput from '../../components/FormInput'
-import Button from '../../components/Button'
+import Button, { DO_DISPATCH } from '../../components/Button'
 import {
   setUsernameActionCreator,
   setEmailActionCreator,
@@ -32,7 +33,20 @@ const LoginForm = () => {
             placeholder="Password"
             action={setFirstPasswordActionCreator}
           />
-          <Button content="Log In" action={logIn} />
+          <div className="flex justify-start">
+            <Button
+              content="Log In"
+              action={{
+                type: DO_DISPATCH,
+                payload: logIn
+              }}
+            />
+            <div className="ml-4 text-gray-400 flex items-center">
+              or
+              <Link className="mx-1 text-blue-600" to="/reg">Sign up</Link>
+              for PW
+            </div>
+          </div>
         </form>
       </div>
     </div>
