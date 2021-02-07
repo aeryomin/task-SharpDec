@@ -1,13 +1,10 @@
 import React from 'react'
 import Cookies from 'universal-cookie'
 import Button, { DO_FUNCTION } from '../../components/Button'
-import { history } from '../../redux'
 
 const logout = () => {
-  const cookie = new Cookies()
-  history.push('/login')
+  new Cookies().remove('token')
   window.location.reload()
-  cookie.remove('token')
 }
 
 const Main = () => {
