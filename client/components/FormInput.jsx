@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 
 const FormInput = (props) => {
   const [value, setValue] = useState('')
+  const borderColor = value ? 'gray-200' : 'red-300'
   const dispatch = useDispatch()
   const {
     type, title, placeholder, action
@@ -19,10 +20,9 @@ const FormInput = (props) => {
         {title}
       </label>
       <input
-        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className={`shadow appearance-none border border-${borderColor} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
         id={`id-${title}`}
         type={type}
-        required
         placeholder={placeholder}
         value={value}
         onChange={(event) => {

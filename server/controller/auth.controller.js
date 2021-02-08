@@ -4,8 +4,6 @@ import Account from '../model/Account.model'
 import config from '../config'
 
 export async function registration(req, res) {
-  console.log('reg func', req.body)
-
   const account = await Account.findOne({ email: req.body.email })
 
   if (account !== null) {
@@ -14,7 +12,8 @@ export async function registration(req, res) {
 
   if (
     (!req.body.username && !req.body.password) ||
-    (!req.body.username || !req.body.password)
+    !req.body.username ||
+    !req.body.password
   ) {
     res.status(400).send('You must send username and password')
   }
@@ -25,16 +24,24 @@ export async function registration(req, res) {
     password: req.body.password
   })
   newAccount.save()
+  const payload = { uid: newAccount.id }
+  const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
   delete newAccount.password
-  res.json({ status: 'user is added', newAccount })
+  res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
+  res.send({ status: 'ok', token, user: newAccount })
 }
 
 export async function login(req, res) {
-  console.log('login func', req.body)
+  if (
+    (!req.body.email && !req.body.password) ||
+    !req.body.email ||
+    !req.body.password
+  ) {
+    res.status(400).send('You must send email and password')
+  }
 
   try {
     const account = await Account.findAndValidateAccount(req.body)
-    console.log(account)
 
     const payload = { uid: account.id }
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
@@ -42,7 +49,7 @@ export async function login(req, res) {
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.send({ status: 'ok', token, user: account })
   } catch (err) {
-    res.json({ status: 'error', err })
+    res.status(401).send('Invalid email or password')
   }
 }
 

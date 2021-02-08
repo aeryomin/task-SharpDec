@@ -13,10 +13,10 @@ import {
 } from '../../redux/actionCreators/accountActionCreator'
 
 const RegistrationForm = () => {
-  const { password, secondPassword } = useSelector((s) => s.account)
+  const { username, email, password, secondPassword } = useSelector((s) => s.account)
 
-  const gerPayload =
-    password === secondPassword
+  const getPayload =
+    password === secondPassword && username !== '' && email !== ''
       ? { type: DO_DISPATCH, payload: registration }
       : { type: EMPTY }
 
@@ -60,7 +60,7 @@ const RegistrationForm = () => {
             </div>
           )}
           <div className="flex justify-between items-center">
-            <Button content="Registration" action={gerPayload} />
+            <Button content="Registration" action={getPayload} />
             <div className="text-gray-400 flex items-center">
               or
               <Link className="ml-2 text-blue-600 hover:underline" to="/login">

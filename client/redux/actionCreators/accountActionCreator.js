@@ -58,7 +58,7 @@ export const tryLogIn = () => async (dispatch) => {
 export const registration = () => async (dispatch, getState) => {
   console.log('reg')
   const { username, email, password } = getState().account
-  fetch('/api/v1/auth/registration', {
+  const response = await fetch('/api/v1/auth/registration', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -69,9 +69,14 @@ export const registration = () => async (dispatch, getState) => {
       password
     })
   })
-    .then((r) => r.json())
-    .then(() => {
-      dispatch({ type: REGISTRATION })
-      history.push('/login')
-    })
+  const account = await response.json()
+
+  // dispatch({ type: REGISTRATION })
+  dispatch({ type: LOGIN, token: account.token, user: account.user })
+  history.push('/main')
+  // .then((r) => r.json())
+  // .then(() => {
+  //   dispatch({ type: REGISTRATION })
+  // history.push('/login')
+  // })
 }
