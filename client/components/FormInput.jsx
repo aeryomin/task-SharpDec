@@ -7,9 +7,7 @@ const FormInput = (props) => {
   const [value, setValue] = useState('')
   const borderColor = value ? 'gray-200' : 'red-300'
   const dispatch = useDispatch()
-  const {
-    type, title, placeholder, action
-  } = props
+  const { type, title, placeholder, action } = props
 
   return (
     <div className="mb-3">
@@ -31,12 +29,12 @@ const FormInput = (props) => {
             dispatch(action(event.target.value))
           }
         }}
-        onKeyDown={(event) => {
-          event.preventDefault()
-          if (event.key === 'Enter') {
-            dispatch(action(value))
-          }
-        }}
+        // onKeyDown={(event) => {
+        //   event.preventDefault()
+        //   if (event.key === 'Enter') {
+        //     dispatch(action(value))
+        //   }
+        // }}
         onBlur={() => {
           dispatch(action(value))
         }}

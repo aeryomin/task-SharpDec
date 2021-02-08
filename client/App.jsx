@@ -51,11 +51,7 @@ const App = () => (
                 path="/login"
                 component={() => <LoginForm />}
               />
-              <PrivateRoute
-                exact
-                path="/main"
-                component={() => <Main />}
-              />
+              <PrivateRoute exact path="/main" component={() => <Main />} />
             </Switch>
           </Startup>
         </ConnectedRouter>

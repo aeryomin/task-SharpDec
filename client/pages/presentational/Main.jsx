@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import Header from '../../components/Header'
 import Button, { DO_FUNCTION } from '../../components/Button'
-// import FormInput from '../../components/FormInput'
 import { getUsers } from '../../redux/actionCreators/transactionsActionCreator'
 
 const logout = () => {
@@ -12,7 +11,7 @@ const logout = () => {
 }
 
 const filterUser = (users, inputValue) => {
-  return users.filter((user) => user.username.includes(inputValue, 0))
+  return users.filter((user) => user.username.indexOf(inputValue, 0) === 0)
 }
 
 const Main = () => {
@@ -29,11 +28,11 @@ const Main = () => {
   }, [inputValue])
 
   return (
-    <div>
+    <div className="h-screen">
       <Header />
-      <div>
+      <div className="border border-gray-200 rounded w-1/4 h-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
         <input
-          className="border border-gray-400 rounded"
+          className="border border-gray-400 rounded w-full"
           type="text"
           value={inputValue}
           onChange={(event) => {
@@ -41,11 +40,25 @@ const Main = () => {
           }}
         />
       </div>
-      <div>
-        {filterUser(users, inputValue).map((user) => {
-          return <div key={user._id}>{user.username}</div>
-        })}
-      </div>
+      {inputValue && (
+        <div>
+          {filterUser(users, inputValue).map((user) => {
+            return (
+              <div key={user._id}>
+                <button
+                  type="button"
+                  className="hover:bg-gray-200"
+                  onClick={() => {
+                    setInputValue(user.username)
+                  }}
+                >
+                  {user.username}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      )}
       <div className="mt-10">
         <Button
           content="Log out"
