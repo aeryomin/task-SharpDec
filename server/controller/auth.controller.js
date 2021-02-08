@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken'
 import Account from '../model/Account.model'
 import config from '../config'
+import { STARTING_BALANCE } from '../../client/constants/main'
 
 export async function registration(req, res) {
   const account = await Account.findOne({ email: req.body.email })
@@ -21,7 +22,8 @@ export async function registration(req, res) {
   const newAccount = new Account({
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    balance: STARTING_BALANCE
   })
   newAccount.save()
   const payload = { uid: newAccount.id }
@@ -68,9 +70,10 @@ export async function getAccountData(req, res) {
   }
 }
 
-export async function getOne(req, res) {
+export async function getAll(req, res) {
   try {
-    res.json({ status: 'ok' })
+    const users = await Account.find({})
+    res.json(users)
   } catch (err) {
     res.json({ status: 'error', err })
   }

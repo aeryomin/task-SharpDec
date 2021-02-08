@@ -5,7 +5,8 @@ import {
   UPDATE_EMAIL,
   UPDATE_PASSWORD,
   UPDATE_SECOND_PASSWORD,
-  LOGIN
+  LOGIN,
+  REGISTRATION
 } from '../actionCreators/accountActionCreator'
 
 const cookies = new Cookies()
@@ -16,7 +17,8 @@ const initialState = {
   password: '',
   secondPassword: '',
   token: cookies.get('token'),
-  user: null
+  user: null,
+  balance: 0
 }
 
 const accountReducer = (state = initialState, action) => {
@@ -35,6 +37,9 @@ const accountReducer = (state = initialState, action) => {
     }
     case LOGIN: {
       return { ...state, token: action.token, password: '', user: action.user }
+    }
+    case REGISTRATION: {
+      return { ...state, token: action.token, password: '', user: action.user, balance: action.balance }
     }
     default:
       return state

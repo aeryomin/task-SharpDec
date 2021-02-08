@@ -70,6 +70,11 @@ export const registration = () => async (dispatch, getState) => {
   })
   const account = await response.json()
 
-  dispatch({ type: LOGIN, token: account.token, user: account.user })
+  dispatch({
+    type: REGISTRATION,
+    token: account.token,
+    user: account.user,
+    balance: 500
+  })
   history.push('/main')
 }

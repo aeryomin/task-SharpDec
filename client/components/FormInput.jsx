@@ -32,8 +32,8 @@ const FormInput = (props) => {
           }
         }}
         onKeyDown={(event) => {
+          event.preventDefault()
           if (event.key === 'Enter') {
-            event.preventDefault()
             dispatch(action(value))
           }
         }}
