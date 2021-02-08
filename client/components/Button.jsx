@@ -14,6 +14,7 @@ const switchAction = (action) => {
       break
     }
     case DO_DISPATCH: {
+      console.log('do dispatch')
       store.dispatch(action.payload())
       break
     }

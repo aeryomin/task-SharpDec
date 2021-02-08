@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import FormInput from '../../components/FormInput'
-import Button, { DO_FUNCTION, EMPTY } from '../../components/Button'
+import Button, { DO_DISPATCH, EMPTY } from '../../components/Button'
 import {
   setUsernameActionCreator,
   setEmailActionCreator,
@@ -15,13 +15,9 @@ import {
 const RegistrationForm = () => {
   const { password, secondPassword } = useSelector((s) => s.account)
 
-  // const makeRegPayloadObj = (first, second) => {
-  //   return first === second ? { type: DO_FUNCTION, payload: registration } : { type: EMPTY }
-  // }
-
   const gerPayload =
     password === secondPassword
-      ? { type: DO_FUNCTION, payload: registration }
+      ? { type: DO_DISPATCH, payload: registration }
       : { type: EMPTY }
 
   const isPasswodrsMatches = () => {

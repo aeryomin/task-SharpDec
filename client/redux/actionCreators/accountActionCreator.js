@@ -6,6 +6,7 @@ export const UPDATE_EMAIL = 'UPDATE_EMAIL'
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD'
 export const UPDATE_SECOND_PASSWORD = 'UPDATE_SECOND_PASSWORD'
 export const LOGIN = 'LOGIN'
+export const REGISTRATION = 'REGISTRATION'
 
 export const setUsernameActionCreator = (username) => ({
   type: UPDATE_USERNAME,
@@ -54,6 +55,23 @@ export const tryLogIn = () => async (dispatch) => {
   history.push('/main')
 }
 
-export const registration = () => {
+export const registration = () => async (dispatch, getState) => {
   console.log('reg')
+  const { username, email, password } = getState().account
+  fetch('/api/v1/auth/registration', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username,
+      email,
+      password
+    })
+  })
+    .then((r) => r.json())
+    .then(() => {
+      dispatch({ type: REGISTRATION })
+      history.push('/login')
+    })
 }

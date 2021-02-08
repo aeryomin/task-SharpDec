@@ -3,6 +3,32 @@ import jwt from 'jsonwebtoken'
 import Account from '../model/Account.model'
 import config from '../config'
 
+export async function registration(req, res) {
+  console.log('reg func', req.body)
+
+  const account = await Account.findOne({ email: req.body.email })
+
+  if (account !== null) {
+    res.status(400).send('A user with that email already exists')
+  }
+
+  if (
+    (!req.body.username && !req.body.password) ||
+    (!req.body.username || !req.body.password)
+  ) {
+    res.status(400).send('You must send username and password')
+  }
+
+  const newAccount = new Account({
+    username: req.body.username,
+    email: req.body.email,
+    password: req.body.password
+  })
+  newAccount.save()
+  delete newAccount.password
+  res.json({ status: 'user is added', newAccount })
+}
+
 export async function login(req, res) {
   console.log('login func', req.body)
 
