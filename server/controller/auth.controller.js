@@ -28,7 +28,7 @@ export async function registration(req, res) {
   const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
   delete newAccount.password
   res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
-  res.send({ status: 'ok', token, user: newAccount })
+  res.send({ token, user: newAccount })
 }
 
 export async function login(req, res) {
@@ -47,7 +47,7 @@ export async function login(req, res) {
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
     delete account.password
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
-    res.send({ status: 'ok', token, user: account })
+    res.send({ token, user: account })
   } catch (err) {
     res.status(401).send('Invalid email or password')
   }
@@ -62,7 +62,7 @@ export async function getAccountData(req, res) {
     const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
     delete account.password
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
-    res.send({ status: 'ok', token, user: account })
+    res.send({ token, user: account })
   } catch (err) {
     res.json({ status: 'error', err })
   }

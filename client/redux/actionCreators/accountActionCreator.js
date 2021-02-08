@@ -56,7 +56,6 @@ export const tryLogIn = () => async (dispatch) => {
 }
 
 export const registration = () => async (dispatch, getState) => {
-  console.log('reg')
   const { username, email, password } = getState().account
   const response = await fetch('/api/v1/auth/registration', {
     method: 'POST',
@@ -71,12 +70,6 @@ export const registration = () => async (dispatch, getState) => {
   })
   const account = await response.json()
 
-  // dispatch({ type: REGISTRATION })
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
-  // .then((r) => r.json())
-  // .then(() => {
-  //   dispatch({ type: REGISTRATION })
-  // history.push('/login')
-  // })
 }
