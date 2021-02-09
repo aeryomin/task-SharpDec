@@ -29,12 +29,12 @@ const FormInput = (props) => {
             dispatch(action(event.target.value))
           }
         }}
-        // onKeyDown={(event) => {
-        //   event.preventDefault()
-        //   if (event.key === 'Enter') {
-        //     dispatch(action(value))
-        //   }
-        // }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            dispatch(action(value))
+          }
+        }}
         onBlur={() => {
           dispatch(action(value))
         }}

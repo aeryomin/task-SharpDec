@@ -8,11 +8,12 @@ const InputUser = (props) => {
 
   return (
     <div className="mr-2">
-      <label htmlFor="userInput">Username:</label>
+      <label className="text-sm" htmlFor="userInput">Username:</label>
       <input
         className="border border-gray-400 rounded w-full p-2"
         id="userInput"
         type="text"
+        placeholder="username"
         value={value}
         onChange={(event) => {
           setValue(event.target.value)

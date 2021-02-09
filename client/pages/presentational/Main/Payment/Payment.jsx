@@ -14,7 +14,7 @@ const Payment = (props) => {
   }, [inputUserValue])
 
   return (
-    <div className="border border-gray-200 rounded w-1/2 h-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
+    <div className="border border-gray-200 rounded w-full md:w-1/2 h-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
       <div className="flex">
         <InputUser
           value={inputUserValue}
@@ -22,13 +22,15 @@ const Payment = (props) => {
           users={users}
         />
         <InputPW value={inputPWValue} setValue={setInputPWValue} />
-        <Button
-          content="Commit"
-          action={{
-            type: DO_DISPATCH,
-            payload: ''
-          }}
-        />
+        <div className="flex items-end ml-2">
+          <Button
+            content="Commit"
+            action={{
+              type: DO_DISPATCH,
+              payload: ''
+            }}
+          />
+        </div>
       </div>
       {inputUserValue && (
         <Autocomplete
