@@ -9,6 +9,7 @@ import mongooseService from './services/mongoose'
 import passportJWT from './services/passport'
 import './config'
 import authRoutes from './routes/api/auth.routes'
+import transactionsRoutes from './routes/api/transactions.routes'
 // import Account from './model/Account.model'
 
 mongooseService.connect()
@@ -37,6 +38,7 @@ middleware.forEach((item) => server.use(item))
 passport.use('jwt', passportJWT.jwt)
 
 server.use('/api/v1/auth', authRoutes)
+server.use('/api/v1/transactions', transactionsRoutes)
 
 server.listen(PORT, (err) => {
   if (err) {

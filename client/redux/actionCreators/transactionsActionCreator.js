@@ -3,7 +3,7 @@ export const SET_RECIPIENT = 'SET_PAYMENT_DATA'
 export const SET_AMOUNT = 'SET_AMOUNT'
 
 export const getUsers = () => async (dispatch) => {
-  const response = await fetch('/api/v1/auth/users')
+  const response = await fetch('/api/v1/transactions/protected/users/list')
   const users = await response.json()
   dispatch({ type: GET_USERS, users })
 }
