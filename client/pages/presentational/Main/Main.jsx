@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import Header from '../../../components/Header'
-import Button, { DO_FUNCTION } from '../../../components/Button'
 import { getUsers } from '../../../redux/actionCreators/transactionsActionCreator'
-import InputUser from './InputUser'
-import Autocomplete, { filterUser } from './Autocomplete'
+import NewTransaction from './NewTransaction/NewTransaction'
+import { filterUser } from './NewTransaction/Autocomplete'
+import Button, { DO_FUNCTION } from '../../../components/Button'
 
 const logout = () => {
   new Cookies().remove('token')
@@ -28,28 +28,12 @@ const Main = () => {
   return (
     <div className="h-screen flex flex-col justify-start">
       <Header />
-      <div className="flex h-full">
-        <div className="border border-gray-200 rounded w-1/2 h-1/3 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
-          <div className="flex">
-            <InputUser inputValue={inputValue} setInputValue={setInputValue} />
-            <div className="flex flex-col w-1/5 ">
-              <label htmlFor="inputPW">PW</label>
-              <input
-                id="inputPW"
-                className="p-2 border border-gray-400 rounded"
-                type="text"
-                placeholder="50"
-              />
-            </div>
-          </div>
-          {inputValue && (
-            <Autocomplete
-              users={users}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-            />
-          )}
-        </div>
+      <div className="flex h-full m-3">
+        <NewTransaction
+          users={users}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+        />
       </div>
       <div className="mb-10">
         <Button

@@ -4,7 +4,7 @@ const InputUser = (props) => {
   const { inputValue, setInputValue } = props
 
   return (
-    <div className="">
+    <div className="mr-2">
       <label htmlFor="userInput">Username:</label>
       <input
         className="border border-gray-400 rounded w-full p-2"
