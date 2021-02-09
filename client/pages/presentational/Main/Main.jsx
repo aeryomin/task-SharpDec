@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import Header from '../../../components/Header'
 import { getUsers } from '../../../redux/actionCreators/transactionsActionCreator'
-import NewTransaction from './NewTransaction/NewTransaction'
-import { filterUser } from './NewTransaction/Autocomplete'
+import Payment from './Payment/Payment'
 import Button, { DO_FUNCTION } from '../../../components/Button'
 
 const logout = () => {
@@ -14,26 +13,17 @@ const logout = () => {
 
 const Main = () => {
   const dispatch = useDispatch()
-  const [inputValue, setInputValue] = useState('')
   const { users } = useSelector((s) => s.transactions)
 
   useEffect(() => {
     dispatch(getUsers())
   }, [])
 
-  useEffect(() => {
-    filterUser(users, inputValue)
-  }, [inputValue])
-
   return (
     <div className="h-screen flex flex-col justify-start">
       <Header />
       <div className="flex h-full m-3">
-        <NewTransaction
-          users={users}
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-        />
+        <Payment users={users} />
       </div>
       <div className="mb-10">
         <Button
