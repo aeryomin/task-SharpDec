@@ -9,7 +9,7 @@ import Startup from './startup'
 import Home from './pages/presentational/Home'
 import LoginForm from './pages/forms/LoginForm'
 import RegistrationForm from './pages/forms/RegistrationForm'
-import Main from './pages/presentational/Main'
+import Main from './pages/presentational/Main/Main'
 
 const AnonymousRoute = ({ component: Component, ...rest }) => {
   const account = useSelector((s) => s.account)
