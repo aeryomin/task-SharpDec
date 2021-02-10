@@ -10,16 +10,25 @@ import passportJWT from './services/passport'
 import './config'
 import authRoutes from './routes/api/auth.routes'
 import transactionsRoutes from './routes/api/transactions.routes'
-// import Account from './model/Account.model'
+import Transaction from './model/Transactions.model'
 
 mongooseService.connect()
 
-// const account = new Account({
-//   email: 'eryomin.aa@gmail.com',
-//   username: 'lex',
-//   password: 'a'
-// })
-// account.save()
+const payment = new Transaction({
+  transactions: [
+    {
+      'token-fsfasfsdf': [
+        {
+          email: 'eryomin.aa@gmail.com',
+          username: 'lex',
+          password: 'a'
+        }
+      ]
+    }
+  ]
+})
+
+payment.save()
 
 const PORT = process.env.PORT || 8090
 

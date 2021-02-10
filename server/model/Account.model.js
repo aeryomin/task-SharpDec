@@ -20,6 +20,10 @@ const accountSchema = new mongoose.Schema(
     balance: {
       type: Number,
       required: true
+    },
+    transToken: {
+      type: String,
+      required: true
     }
   },
   {

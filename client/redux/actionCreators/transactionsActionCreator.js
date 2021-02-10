@@ -1,6 +1,7 @@
 export const GET_USERS = 'GET_USERS'
 export const SET_RECIPIENT = 'SET_PAYMENT_DATA'
 export const SET_AMOUNT = 'SET_AMOUNT'
+export const SUBMIT_PAYMENT = 'SUBMIT_PAYMENT'
 
 export const getUsers = () => async (dispatch) => {
   const response = await fetch('/api/v1/transactions/protected/users/list')
@@ -8,10 +9,29 @@ export const getUsers = () => async (dispatch) => {
   dispatch({ type: GET_USERS, users })
 }
 
-export const setRecipient = (id, username) => {
-  return { type: SET_RECIPIENT, id, username, date: new Date() }
+export const setRecipient = (id) => {
+  return { type: SET_RECIPIENT, id }
 }
 
 export const setAmount = (amount) => {
   return { type: SET_AMOUNT, amount }
+}
+
+export const submitPayment = () => async (dispatch, getState) => {
+  const { recipientId, amount } = getState().transactions.payment
+  const { transToken } = getState().account.user
+
+  const response = await fetch('/api/v1/transactions/protected/transactions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${transToken}`
+    },
+    body: JSON.stringify({ recipientId, amount })
+  })
+
+  const transaction = await response.json()
+  console.log('transaction: ', transaction)
+
+  dispatch({ type: SUBMIT_PAYMENT, amount: transaction.amount })
 }

@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import jwt from 'jsonwebtoken'
+import { nanoid } from 'nanoid'
 import Account from '../model/Account.model'
 import config from '../config'
 import { STARTING_BALANCE } from '../../client/constants/main'
@@ -23,7 +24,8 @@ export async function registration(req, res) {
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    balance: STARTING_BALANCE
+    balance: STARTING_BALANCE,
+    transToken: nanoid()
   })
   newAccount.save()
   const payload = { uid: newAccount.id }
@@ -57,6 +59,8 @@ export async function login(req, res) {
 
 export async function getAccountData(req, res) {
   try {
+    // console.log('-->> req: ', req.cookies)
+
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
     const account = await Account.findById(jwtAccount.uid)
 
@@ -65,15 +69,6 @@ export async function getAccountData(req, res) {
     delete account.password
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.send({ token, user: account })
-  } catch (err) {
-    res.json({ status: 'error', err })
-  }
-}
-
-export async function getAll(req, res) {
-  try {
-    const users = await Account.find({})
-    res.json(users)
   } catch (err) {
     res.json({ status: 'error', err })
   }
