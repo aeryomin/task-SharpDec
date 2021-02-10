@@ -1,12 +1,12 @@
 import jwt from 'jsonwebtoken'
 import Account from '../model/Account.model'
+import Transactions from '../model/Transactions.model'
 import config from '../config'
 
 export async function getUsers(req, res) {
   try {
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
     const account = await Account.findById(jwtAccount.uid)
-    delete account.password
     const users = await Account.find({})
     res.json(users)
   } catch (err) {
@@ -19,6 +19,9 @@ export async function createTransaction(req, res) {
 
   try {
     jwt.verify(req.cookies.token, config.secret)
+    const account = await Account.findById(jwtAccount.uid)
+    const transactions = await Transactions.find({})
+    console.log(transactions)
 
     const obj = {
       id: '123',
