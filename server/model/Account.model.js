@@ -17,11 +17,7 @@ const accountSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    balance: {
-      type: Number,
-      required: true
-    },
-    transToken: {
+    transactionToken: {
       type: String,
       required: true
     }

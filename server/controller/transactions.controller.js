@@ -5,8 +5,7 @@ import config from '../config'
 
 export async function getUsers(req, res) {
   try {
-    const jwtAccount = jwt.verify(req.cookies.token, config.secret)
-    const account = await Account.findById(jwtAccount.uid)
+    jwt.verify(req.cookies.token, config.secret)
     const users = await Account.find({})
     res.json(users)
   } catch (err) {
@@ -18,19 +17,17 @@ export async function createTransaction(req, res) {
   console.log('req.body: ', req.body)
 
   try {
-    jwt.verify(req.cookies.token, config.secret)
+    const jwtAccount = jwt.verify(req.cookies.token, config.secret)
     const account = await Account.findById(jwtAccount.uid)
-    const transactions = await Transactions.find({})
-    console.log(transactions)
 
-    const obj = {
-      id: '123',
-      date: 123,
-      username: 'Lex',
-      amount: req.body.amount,
-      balance: 1000
-    }
-    res.json(obj)
+    console.log('account', account)
+    const accountTransactions = await Transactions.findOne({
+      transactionToken: account.transactionToken
+    })
+
+    console.log(accountTransactions)
+
+    res.json(accountTransactions)
   } catch (err) {
     res.json({ status: 'error', err })
   }

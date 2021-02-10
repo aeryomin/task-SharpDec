@@ -2,6 +2,8 @@
 import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
 import Account from '../model/Account.model'
+import Transactions from '../model/Transactions.model'
+
 import config from '../config'
 import { STARTING_BALANCE } from '../../client/constants/main'
 
@@ -20,14 +22,32 @@ export async function registration(req, res) {
     res.status(400).send('You must send username and password')
   }
 
+  const transactionToken = nanoid()
+
   const newAccount = new Account({
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
-    balance: STARTING_BALANCE,
-    transToken: nanoid()
+    transactionToken
   })
   newAccount.save()
+
+  const newTransaction = new Transactions({
+    transactionToken,
+    currentBalance: STARTING_BALANCE,
+    payments: [
+      {
+        recipientId: 'none',
+        date: new Date(),
+        recipientUsername: 'none',
+        amount: 0,
+        balance: STARTING_BALANCE
+      }
+    ]
+  })
+
+  newTransaction.save()
+
   const payload = { uid: newAccount.id }
   const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
   delete newAccount.password

@@ -15,15 +15,14 @@ import transactionsRoutes from './routes/api/transactions.routes'
 mongooseService.connect()
 
 // const payment = new Transaction({
-//   transactions: [
+//   transactionToken: 'token',
+//   payments: [
 //     {
-//       'token-fsfasfsdf': [
-//         {
-//           email: 'eryomin.aa@gmail.com',
-//           username: 'lex',
-//           password: 'a'
-//         }
-//       ]
+//       id: 'userId',
+//       date: 1612987716610,
+//       username: 'user4',
+//       amount: 200,
+//       balance: 1000
 //     }
 //   ]
 // })
