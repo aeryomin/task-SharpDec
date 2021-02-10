@@ -2,11 +2,18 @@ export const GET_USERS = 'GET_USERS'
 export const SET_RECIPIENT = 'SET_PAYMENT_DATA'
 export const SET_AMOUNT = 'SET_AMOUNT'
 export const SUBMIT_PAYMENT = 'SUBMIT_PAYMENT'
+export const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 
 export const getUsers = () => async (dispatch) => {
   const response = await fetch('/api/v1/transactions/protected/users/list')
   const users = await response.json()
   dispatch({ type: GET_USERS, users })
+}
+
+export const getTransactions = () => async (dispatch) => {
+  const response = await fetch('/api/v1/transactions/protected/transactions')
+  const transactions = await response.json()
+  dispatch({ type: GET_TRANSACTIONS, transactions })
 }
 
 export const setRecipient = (id) => {

@@ -2,7 +2,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from 'universal-cookie'
 import Header from '../../../components/Header'
-import { getUsers } from '../../../redux/actionCreators/transactionsActionCreator'
+import {
+  getUsers,
+  getTransactions
+} from '../../../redux/actionCreators/transactionsActionCreator'
 import Payment from './Payment/Payment'
 import Button, { DO_FUNCTION } from '../../../components/Button'
 
@@ -17,6 +20,7 @@ const Main = () => {
 
   useEffect(() => {
     dispatch(getUsers())
+    dispatch(getTransactions())
   }, [])
 
   return (

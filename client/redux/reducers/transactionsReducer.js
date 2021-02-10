@@ -2,7 +2,8 @@ import {
   GET_USERS,
   SET_RECIPIENT,
   SET_AMOUNT,
-  SUBMIT_PAYMENT
+  SUBMIT_PAYMENT,
+  GET_TRANSACTIONS
 } from '../actionCreators/transactionsActionCreator'
 
 const initialState = {
@@ -12,13 +13,17 @@ const initialState = {
     amount: null
     // balance: null
   },
-  amount: null
+  amount: null,
+  transactions: []
 }
 
 const transactionsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USERS: {
       return { ...state, users: action.users }
+    }
+    case GET_TRANSACTIONS: {
+      return { ...state, transactions: action.transactions }
     }
     case SET_RECIPIENT: {
       return {
