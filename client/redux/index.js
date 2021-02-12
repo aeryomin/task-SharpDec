@@ -3,8 +3,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { createBrowserHistory } from 'history'
 import { routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
+import { io } from 'socket.io-client'
 
 import reducer from './reducers'
+
+let socket
 
 const initialState = {}
 
@@ -17,5 +20,22 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 )
+
+if (
+  typeof process.env.ENABLE_SOCKETS !== 'undefined' &&
+  process.env.ENABLE_SOCKETS
+) {
+  socket = io(`http://localhost:${process.env.PORT}`)
+
+  // socket.emit('message', 'Hi, server!!!')
+
+  // socket.on('message', (msg) => {
+  //   console.log(msg)
+  // })
+}
+
+export function getSocket() {
+  return socket
+}
 
 export default store

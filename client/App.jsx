@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { useSelector, Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { Switch, Route, Redirect } from 'react-router-dom'
+
 import './main.scss'
 import store, { history } from './redux'
 import Startup from './startup'
@@ -37,28 +39,34 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return <Route {...rest} render={func} />
 }
 
-const App = () => (
-  <div>
-    <React.StrictMode>
-      <Provider store={store}>
-        <ConnectedRouter history={history}>
-          <Startup>
-            <Switch>
-              <Route exact path="/" component={() => <Home />} />
-              <Route exact path="/reg" component={() => <RegistrationForm />} />
-              <AnonymousRoute
-                exact
-                path="/login"
-                component={() => <LoginForm />}
-              />
-              <PrivateRoute exact path="/main" component={() => <Main />} />
-            </Switch>
-          </Startup>
-        </ConnectedRouter>
-      </Provider>
-    </React.StrictMode>
-  </div>
-)
+const App = () => {
+  return (
+    <div>
+      <React.StrictMode>
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Startup>
+              <Switch>
+                <Route exact path="/" component={() => <Home />} />
+                <Route
+                  exact
+                  path="/reg"
+                  component={() => <RegistrationForm />}
+                />
+                <AnonymousRoute
+                  exact
+                  path="/login"
+                  component={() => <LoginForm />}
+                />
+                <PrivateRoute exact path="/main" component={() => <Main />} />
+              </Switch>
+            </Startup>
+          </ConnectedRouter>
+        </Provider>
+      </React.StrictMode>
+    </div>
+  )
+}
 
 const target = document.getElementById('root')
 

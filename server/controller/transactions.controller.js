@@ -23,7 +23,7 @@ export async function createTransaction(req, res) {
     const account = await Account.findById(jwtAccount.uid)
     console.log('account: ', account)
 
-    const accountTransactions = await Transactions.findOne({
+    let accountTransactions = await Transactions.findOne({
       transactionToken: account.transactionToken
     })
     console.log('accountTransactions: ', accountTransactions)
@@ -52,6 +52,10 @@ export async function createTransaction(req, res) {
         { $set: { currentBalance: newAccountBalance } },
         { upsert: false }
       )
+
+      accountTransactions = await Transactions.findOne({
+        transactionToken: account.transactionToken
+      })
     } else {
       res.status(400).send('Balance exceeded')
     }

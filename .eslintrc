@@ -6,6 +6,11 @@
     "document": true,
     "fetch": false
   },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
   "rules": {
     "semi": "off",
     "comma-dangle": ["error", "never"],

@@ -1,3 +1,6 @@
+import { getSocket } from '..'
+import { SEND_TRANSACTIONS } from '../../constants/socket'
+
 export const GET_USERS = 'GET_USERS'
 export const SET_RECIPIENT = 'SET_PAYMENT_DATA'
 export const SET_AMOUNT = 'SET_AMOUNT'
@@ -26,7 +29,7 @@ export const setAmount = (amount) => {
 
 export const submitPayment = () => async (dispatch, getState) => {
   const { recipientId, amount } = getState().transactions.payment
-  const { transToken } = getState().account.user
+  const { transToken, _id } = getState().account.user
 
   const response = await fetch('/api/v1/transactions/protected/transactions', {
     method: 'POST',
@@ -40,5 +43,8 @@ export const submitPayment = () => async (dispatch, getState) => {
   const transaction = await response.json()
   console.log('transaction: ', transaction)
 
+  getSocket().emit('message', { type: SEND_TRANSACTIONS, userId: _id })
+
   dispatch({ type: SUBMIT_PAYMENT, amount: transaction.amount })
+  dispatch(getTransactions())
 }

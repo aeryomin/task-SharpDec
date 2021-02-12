@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+require('dotenv').config()
 
 const config = {
   devtool: 'eval-cheap-module-source-map',
@@ -19,7 +20,7 @@ const config = {
   devServer: {
     hot: true,
     contentBase: resolve(__dirname, 'dist'),
-    port: 8080,
+    port: process.env.CLIENT_DEV_PORT,
     host: 'localhost',
     index: 'index.html',
     open: true,
@@ -81,7 +82,14 @@ const config = {
       ]
     }),
     new ReactRefreshWebpackPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        PORT: process.env.PORT,
+        CLIENT_DEV_PORT: process.env.CLIENT_DEV_PORT,
+        ENABLE_SOCKETS: process.env.ENABLE_SOCKETS
+      }
+    })
   ]
 }
 

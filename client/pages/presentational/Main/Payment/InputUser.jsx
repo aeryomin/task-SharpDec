@@ -15,6 +15,7 @@ const InputUser = (props) => {
         type="text"
         placeholder="username"
         value={value}
+        autoComplete="off"
         onChange={(event) => {
           setValue(event.target.value)
         }}
