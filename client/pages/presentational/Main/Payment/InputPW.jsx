@@ -19,6 +19,7 @@ const InputPW = (props) => {
         value={value}
         onChange={(event) => {
           setValue(event.target.value)
+          dispatch(setAmount(event.target.value))
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
