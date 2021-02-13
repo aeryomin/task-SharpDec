@@ -15,21 +15,24 @@ export async function getUsers(req, res) {
 }
 
 export async function createTransaction(req, res) {
-  console.log('req.body: ', req.body)
+  // console.log('req.body: ', req.body)
 
   try {
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
 
     const account = await Account.findById(jwtAccount.uid)
-    console.log('account: ', account)
+    // console.log('account: ', account)
+    if (account === null) {
+      throw new Error('Account not found')
+    }
 
     let accountTransactions = await Transactions.findOne({
       transactionToken: account.transactionToken
     })
-    console.log('accountTransactions: ', accountTransactions)
+    // console.log('accountTransactions: ', accountTransactions)
 
     const recipient = await Account.findById(req.body.recipientId)
-    console.log('recipient: ', recipient)
+    // console.log('recipient: ', recipient)
 
     const recipientTransactions = await Transactions.findOne({
       transactionToken: recipient.transactionToken
@@ -73,6 +76,15 @@ export async function createTransaction(req, res) {
 
     res.json(accountTransactions)
   } catch (err) {
+    if (err.name === 'JsonWebTokenError') {
+      res.status(401).send('Unauthorized Error')
+    }
+    if (err.kind === 'ObjectId') {
+      res.status(400).send('User not found')
+    }
+    if (err.message === 'Account not found') {
+      res.status(401).send('Invalid user')
+    }
     res.json({ status: 'error', err })
   }
 }
@@ -81,11 +93,20 @@ export async function getUserTransactionsList(req, res) {
   try {
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
     const account = await Account.findById(jwtAccount.uid)
+    if (account === null) {
+      throw new Error('Account not found')
+    }
     const accountTransactions = await Transactions.findOne({
       transactionToken: account.transactionToken
     })
     res.json(accountTransactions)
   } catch (err) {
+    if (err.name === 'JsonWebTokenError') {
+      res.status(401).send('Unauthorized Error')
+    }
+    if (err.message === 'Account not found') {
+      res.status(401).send('Invalid user')
+    }
     res.json({ status: 'error', err })
   }
 }

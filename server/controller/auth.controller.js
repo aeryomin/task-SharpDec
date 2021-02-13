@@ -35,15 +35,6 @@ export async function registration(req, res) {
   const newTransaction = new Transactions({
     transactionToken,
     currentBalance: STARTING_BALANCE
-    // payments: [
-    //   {
-    //     recipientId: 'none',
-    //     date: new Date(),
-    //     recipientUsername: 'none',
-    //     amount: 0,
-    //     balance: STARTING_BALANCE
-    //   }
-    // ]
   })
 
   newTransaction.save()
