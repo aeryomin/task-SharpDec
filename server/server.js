@@ -13,7 +13,6 @@ import config from './config'
 import authRoutes from './routes/api/auth.routes'
 import transactionsRoutes from './routes/api/transactions.routes'
 // import Transaction from './model/Transactions.model'
-import { getUserTransactionsList } from './controller/transactions.controller'
 
 mongooseService.connect()
 

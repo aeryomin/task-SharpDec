@@ -49,7 +49,18 @@ export async function createTransaction(req, res) {
       )
       await Transactions.updateOne(
         { transactionToken: accountTransactions.transactionToken },
-        { $set: { currentBalance: newAccountBalance } },
+        {
+          $set: { currentBalance: newAccountBalance },
+          $push: {
+            payments: {
+              recipientId: recipient._id,
+              date: new Date(),
+              recipientUsername: recipient.username,
+              amount: req.body.amount,
+              balance: newAccountBalance
+            }
+          }
+        },
         { upsert: false }
       )
 

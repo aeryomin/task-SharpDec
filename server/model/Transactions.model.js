@@ -12,24 +12,24 @@ const transactionsSchema = new mongoose.Schema({
   payments: [
     {
       recipientId: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       date: {
-        type: Date,
-        required: true
+        type: Date
+        // required: true
       },
       recipientUsername: {
-        type: String,
-        required: true
+        type: String
+        // required: true
       },
       amount: {
-        type: Number,
-        required: true
+        type: Number
+        // required: true
       },
       balance: {
-        type: Number,
-        required: true
+        type: Number
+        // required: true
       }
     }
   ]
