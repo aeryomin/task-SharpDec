@@ -1,10 +1,11 @@
 module.exports = {
   purge: ['./client/**/*.html', './client/**/*.jsx', './client/**/*.js'],
-  // purge: {
-  //   enabled: false
-  // },
   theme: {
-    extend: {}
+    extend: {
+      padding: {
+        custom: '15px'
+      }
+    }
   },
   variants: {
     extend: {}
