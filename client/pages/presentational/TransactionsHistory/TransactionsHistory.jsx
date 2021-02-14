@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
+import { setRecipient } from '../../../redux/actionCreators/transactionsActionCreator'
 
 const TransactionsHistory = () => {
   const { payments } = useSelector((s) => s.transactions.transactions)
@@ -7,6 +8,8 @@ const TransactionsHistory = () => {
     window.matchMedia('(min-width: 768px)').matches
   )
   const scrollElem = useRef(null)
+  const [padding, setPadding] = useState('0')
+  const [currentEl, setCurrentEl] = useState()
   const formatDate = (date) => {
     if (String(date).length < 2) {
       return '0'.concat(String(date))
@@ -18,8 +21,18 @@ const TransactionsHistory = () => {
     if (elem.current === document.body) {
       return window.innerWidth - document.documentElement.clientWidth
     }
-    return elem.current.offsetWidth - elem.current.clientWidth
+    if (elem.current !== null) {
+      return elem.current.offsetWidth - elem.current.clientWidth
+    }
+    return '0'
   }
+
+  useEffect(() => {
+    if (scrollElem.current !== null) {
+      setPadding(getScrollbarWidth(scrollElem))
+    }
+  }, [currentEl])
+
   useEffect(() => {
     const handler = (e) => setMatches(e.matches)
     window.matchMedia('(min-width: 768px)').addListener(handler)
@@ -33,29 +46,34 @@ const TransactionsHistory = () => {
           className="w-full "
           style={
             matches
-              ? { paddingRight: `${getScrollbarWidth(scrollElem)}px` }
+              ? { paddingRight: `${padding}px` }
               : { paddingRight: '0px' }
           }
         >
-          <table className="w-full table-fixed border-collapse">
-            <tbody className="text-sm text-blue-700">
-              <td className="w-1/3">Date</td>
-              <td>Name</td>
-              <td>Amount</td>
-              <td>Balance</td>
-            </tbody>
-          </table>
+          <div className="flex w-full">
+            <div className="w-1/3">Date</div>
+            <div className="w-1/5">Name</div>
+            <div className="w-1/5">Amount</div>
+            <div className="w-1/5">Balance</div>
+          </div>
         </div>
         {!!payments && (
-          <div ref={scrollElem} className="w-full h-5/6 overflow-y-auto">
-            <table className="w-full table-fixed border-collapse">
-              <tbody className="">
-                {payments.map((transaction) => {
-                  return (
-                    <tr className="text-xs" key={transaction._id}>
-                      <td className="w-1/3">{`${new Date(
-                        transaction.date
-                      ).getDate()}:${formatDate(
+          <div
+            ref={(el) => {
+              setCurrentEl(scrollElem.current)
+              scrollElem.current = el
+            }}
+            className="w-full h-5/6 overflow-y-auto"
+          >
+            {payments.map((transaction) => {
+              return (
+                <div key={transaction._id} className="w-full text-xs">
+                  <button
+                    type="button"
+                    className="flex w-full hover:bg-blue-300"
+                  >
+                    <div className="w-1/3 text-left">
+                      {`${new Date(transaction.date).getDate()}:${formatDate(
                         new Date(transaction.date).getMonth() + 1
                       )}:${new Date(
                         transaction.date
@@ -63,15 +81,17 @@ const TransactionsHistory = () => {
                         new Date(transaction.date).getHours()
                       )}:${formatDate(
                         new Date(transaction.date).getMinutes()
-                      )}`}</td>
-                      <td>{transaction.recipientUsername}</td>
-                      <td>{transaction.amount}</td>
-                      <td>{transaction.balance}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+                      )}`}
+                    </div>
+                    <div className="w-1/5 text-left">
+                      {transaction.recipientUsername}
+                    </div>
+                    <div className="w-1/5 text-left">{transaction.amount}</div>
+                    <div className="w-1/5 text-left">{transaction.balance}</div>
+                  </button>
+                </div>
+              )
+            })}
           </div>
         )}
       </div>
