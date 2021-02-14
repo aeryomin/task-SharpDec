@@ -1,8 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
-import { setRecipient } from '../../../redux/actionCreators/transactionsActionCreator'
+import { useSelector, useDispatch } from 'react-redux'
+import {
+  setRecipient,
+  setAmount
+} from '../../../redux/actionCreators/transactionsActionCreator'
 
-const TransactionsHistory = () => {
+const TransactionsHistory = (props) => {
+  const {
+    users,
+    setInputUserValue,
+    setInputPWValue
+  } = props
+  const dispatch = useDispatch()
   const { payments } = useSelector((s) => s.transactions.transactions)
   const [matches, setMatches] = useState(
     window.matchMedia('(min-width: 768px)').matches
@@ -45,12 +54,10 @@ const TransactionsHistory = () => {
         <div
           className="w-full "
           style={
-            matches
-              ? { paddingRight: `${padding}px` }
-              : { paddingRight: '0px' }
+            matches ? { paddingRight: `${padding}px` } : { paddingRight: '0px' }
           }
         >
-          <div className="flex w-full">
+          <div className="flex w-full text-blue-500">
             <div className="w-1/3">Date</div>
             <div className="w-1/5">Name</div>
             <div className="w-1/5">Amount</div>
@@ -70,6 +77,20 @@ const TransactionsHistory = () => {
                 <div key={transaction._id} className="w-full text-xs">
                   <button
                     type="button"
+                    onClick={() => {
+                      setInputUserValue(transaction.recipientUsername)
+                      setInputPWValue(transaction.amount)
+                      const recipient = users.find(
+                        (user) =>
+                          user.username === transaction.recipientUsername
+                      )
+                      if (recipient) {
+                        dispatch(
+                          setRecipient(recipient._id, recipient.username)
+                        )
+                        dispatch(setAmount(transaction.amount))
+                      }
+                    }}
                     className="flex w-full hover:bg-blue-300"
                   >
                     <div className="w-1/3 text-left">

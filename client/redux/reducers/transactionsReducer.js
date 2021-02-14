@@ -2,7 +2,7 @@ import {
   GET_USERS,
   SET_RECIPIENT,
   SET_AMOUNT,
-  SUBMIT_PAYMENT,
+  // SUBMIT_PAYMENT,
   GET_TRANSACTIONS
 } from '../actionCreators/transactionsActionCreator'
 
@@ -33,9 +33,9 @@ const transactionsReducer = (state = initialState, action) => {
         }
       }
     }
-    case SUBMIT_PAYMENT: {
-      return { ...state, amount: action.amount }
-    }
+    // case SUBMIT_PAYMENT: {
+    //   return { ...state, amount: action.amount }
+    // }
     case SET_AMOUNT: {
       return { ...state, payment: { ...state.payment, amount: action.amount } }
     }

@@ -6,9 +6,15 @@ import Button, { DO_DISPATCH } from '../../../../components/Button'
 import { submitPayment } from '../../../../redux/actionCreators/transactionsActionCreator'
 
 const Payment = (props) => {
-  const { users } = props
-  const [inputUserValue, setInputUserValue] = useState('')
-  const [inputPWValue, setInputPWValue] = useState('')
+  const {
+    users,
+    inputUserValue,
+    setInputUserValue,
+    inputPWValue,
+    setInputPWValue
+  } = props
+  // const [inputUserValue, setInputUserValue] = useState('')
+  // const [inputPWValue, setInputPWValue] = useState('')
 
   useEffect(() => {
     filterUser(users, inputUserValue)
