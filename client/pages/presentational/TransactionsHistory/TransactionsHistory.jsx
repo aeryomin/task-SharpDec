@@ -1,17 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import {
-  setRecipient,
-  setAmount
-} from '../../../redux/actionCreators/transactionsActionCreator'
+import { useSelector } from 'react-redux'
+import TransactionRow from './TransactionRow'
 
 const TransactionsHistory = (props) => {
-  const {
-    users,
-    setInputUserValue,
-    setInputPWValue
-  } = props
-  const dispatch = useDispatch()
+  const { users, setInputUserValue, setInputPWValue } = props
   const { payments } = useSelector((s) => s.transactions.transactions)
   const [matches, setMatches] = useState(
     window.matchMedia('(min-width: 768px)').matches
@@ -19,12 +11,6 @@ const TransactionsHistory = (props) => {
   const scrollElem = useRef(null)
   const [padding, setPadding] = useState('0')
   const [currentEl, setCurrentEl] = useState()
-  const formatDate = (date) => {
-    if (String(date).length < 2) {
-      return '0'.concat(String(date))
-    }
-    return date
-  }
 
   function getScrollbarWidth(elem) {
     if (elem.current === document.body) {
@@ -74,43 +60,13 @@ const TransactionsHistory = (props) => {
           >
             {payments.map((transaction) => {
               return (
-                <div key={transaction._id} className="w-full text-xs">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setInputUserValue(transaction.recipientUsername)
-                      setInputPWValue(transaction.amount)
-                      const recipient = users.find(
-                        (user) =>
-                          user.username === transaction.recipientUsername
-                      )
-                      if (recipient) {
-                        dispatch(
-                          setRecipient(recipient._id, recipient.username)
-                        )
-                        dispatch(setAmount(transaction.amount))
-                      }
-                    }}
-                    className="flex w-full hover:bg-blue-300"
-                  >
-                    <div className="w-1/3 text-left">
-                      {`${new Date(transaction.date).getDate()}:${formatDate(
-                        new Date(transaction.date).getMonth() + 1
-                      )}:${new Date(
-                        transaction.date
-                      ).getFullYear()}/${formatDate(
-                        new Date(transaction.date).getHours()
-                      )}:${formatDate(
-                        new Date(transaction.date).getMinutes()
-                      )}`}
-                    </div>
-                    <div className="w-1/5 text-left">
-                      {transaction.recipientUsername}
-                    </div>
-                    <div className="w-1/5 text-left">{transaction.amount}</div>
-                    <div className="w-1/5 text-left">{transaction.balance}</div>
-                  </button>
-                </div>
+                <TransactionRow
+                  key={transaction._id}
+                  transaction={transaction}
+                  setInputUserValue={setInputUserValue}
+                  setInputPWValue={setInputPWValue}
+                  users={users}
+                />
               )
             })}
           </div>
