@@ -2,7 +2,11 @@ import {
   SET_TRANSACTIONS_TO_RENDER,
   SET_SORT_FIELD,
   TOGGLE_SORT_DIRECTION,
-  sortOptions
+  SET_DATE_FILTER,
+  SET_NAME_FILTER,
+  SET_AMOUNT_FILTER,
+  sortOptions,
+  filterOptions
 } from '../actionCreators/transactionsToRenderActionCreator'
 
 const initialState = {
@@ -10,11 +14,20 @@ const initialState = {
     field: sortOptions.field.DATE,
     direction: sortOptions.direction.ASCENDING
   },
+  filterOptions: {
+    date: filterOptions.DATE,
+    name: filterOptions.NAME,
+    amount: filterOptions.AMOUNT
+  },
   transactionsToRender: []
 }
 
 const transactionsToRenderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_DATE_FILTER: {
+      console.log('action.date', action.date)
+      return { ...state, filterOptions: { ...state.filterOptions, date: action.date } }
+    }
     case SET_SORT_FIELD: {
       return {
         ...state,

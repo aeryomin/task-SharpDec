@@ -3,6 +3,9 @@
 export const SET_TRANSACTIONS_TO_RENDER = 'SET_TRANSACTIONS_TO_RENDER'
 export const SET_SORT_FIELD = 'SET_SORT_FIELD'
 export const TOGGLE_SORT_DIRECTION = 'TOGGLE_SORT_DIRECTION'
+export const SET_DATE_FILTER = 'SET_DATE_FILTER'
+export const SET_NAME_FILTER = 'SET_NAME_FILTER'
+export const SET_AMOUNT_FILTER = 'SET_AMOUNT_FILTER'
 
 export const sortOptions = {
   field: {
@@ -16,12 +19,31 @@ export const sortOptions = {
   }
 }
 
+export const filterOptions = {
+  DATE: null,
+  NAME: null,
+  AMOUNT: null
+}
+
 export const setSortField = (field) => {
   return { type: SET_SORT_FIELD, field }
 }
 
 export const toggleSortDirection = () => {
   return { type: TOGGLE_SORT_DIRECTION }
+}
+
+export const setDateFilter = (date) => {
+  console.log(date)
+  return { type: SET_DATE_FILTER, date }
+}
+
+export const setNameFilter = (name) => {
+  return { type: SET_NAME_FILTER, name }
+}
+
+export const setAmountFilter = (amount) => {
+  return { type: SET_AMOUNT_FILTER, amount }
 }
 
 export const setTransactionsToRender = () => async (dispatch, getState) => {
@@ -31,7 +53,7 @@ export const setTransactionsToRender = () => async (dispatch, getState) => {
 
   let transactionsToRender = []
   transactionsToRender = [...transactions.payments]
-  console.log('transactionsToRender', transactionsToRender)
+  // console.log('transactionsToRender', transactionsToRender)
 
   switch (storeSortOptions.field) {
     case sortOptions.field.DATE: {
@@ -62,29 +84,8 @@ export const setTransactionsToRender = () => async (dispatch, getState) => {
       return ''
   }
 
-  console.log('after transactionsToRender', transactionsToRender)
+  // console.log('after transactionsToRender', transactionsToRender)
 
   dispatch({ type: SET_TRANSACTIONS_TO_RENDER, transactionsToRender })
   return ''
 }
-
-// export const setTransactionsToRender = (sortingOptions) => {
-//   const { payments } = store.getState().transactions.transactions
-//   let transactionsToRender = []
-//   transactionsToRender = [...payments]
-//   console.log('transactionsToRender', transactionsToRender)
-
-//   switch (sortingOptions.date) {
-//     case sortOptions.date.ASCENDING: {
-//       transactionsToRender.sort((a, b) => new Date(a.date) - new Date(b.date))
-//       break
-//     }
-//     case sortOptions.date.DESCENDING: {
-//       transactionsToRender.sort((a, b) => new Date(b.date) - new Date(a.date))
-//       break
-//     }
-//     default:
-//       return ''
-//   }
-//   return { type: SET_TRANSACTIONS_TO_RENDER, transactionsToRender }
-// }

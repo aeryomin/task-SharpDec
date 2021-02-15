@@ -45,7 +45,7 @@ const TransactionsHistory = (props) => {
   }, [storeSortOptions, payments])
 
   return (
-    <div className="h-1/3 w-full m-2 mx-5 lg:mx-0 lg:m-2 lg:w-1/2">
+    <div className="h-1/3 w-full m-2 mr-5 lg:mx-0 lg:m-2 lg:w-1/2">
       TransactionsHistory
       <div className="w-full h-full border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <div
