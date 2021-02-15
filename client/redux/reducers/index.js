@@ -2,12 +2,14 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 import accountReducer from './accountReducer'
 import transactionsReducer from './transactionsReducer'
+import transactionsToRenderReducer from './transactionsToRenderReducer'
 
 const reducer = (history) =>
   combineReducers({
     router: connectRouter(history),
     account: accountReducer,
-    transactions: transactionsReducer
+    transactions: transactionsReducer,
+    transactionsToRender: transactionsToRenderReducer
   })
 
 export default reducer

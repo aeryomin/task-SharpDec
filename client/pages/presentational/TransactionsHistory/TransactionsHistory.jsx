@@ -1,10 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import TransactionRow from './TransactionRow'
+import SortIcon from './SortIcon'
+import {
+  toggleDateSortOptions,
+  setTransactionsToRender
+} from '../../../redux/actionCreators/transactionsToRenderActionCreator'
 
 const TransactionsHistory = (props) => {
+  const dispatch = useDispatch()
   const { users, setInputUserValue, setInputPWValue } = props
   const { payments } = useSelector((s) => s.transactions.transactions)
+  const { sortOption, transactionsToRender } = useSelector(
+    (s) => s.transactionsToRender
+  )
   const [matches, setMatches] = useState(
     window.matchMedia('(min-width: 768px)').matches
   )
@@ -33,6 +42,10 @@ const TransactionsHistory = (props) => {
     window.matchMedia('(min-width: 768px)').addListener(handler)
   }, [])
 
+  useEffect(() => {
+    dispatch(setTransactionsToRender(sortOption))
+  }, [sortOption, payments])
+
   return (
     <div className="h-1/3 w-full md:w-1/2 m-2">
       TransactionsHistory
@@ -44,13 +57,25 @@ const TransactionsHistory = (props) => {
           }
         >
           <div className="flex w-full text-blue-500">
-            <div className="w-1/3">Date</div>
-            <div className="w-1/5">Name</div>
+            <div className="w-1/3 flex">
+              Date{' '}
+              <button
+                type="button"
+                className="ml-6"
+                onClick={() => {
+                  dispatch(toggleDateSortOptions())
+                  // dispatch(setTransactionsToRender(sortOption))
+                }}
+              >
+                <SortIcon />
+              </button>
+            </div>
+            <div className="w-1/4">Name</div>
             <div className="w-1/5">Amount</div>
             <div className="w-1/5">Balance</div>
           </div>
         </div>
-        {!!payments && (
+        {!!transactionsToRender && (
           <div
             ref={(el) => {
               setCurrentEl(scrollElem.current)
@@ -58,7 +83,7 @@ const TransactionsHistory = (props) => {
             }}
             className="w-full h-5/6 overflow-y-auto"
           >
-            {payments.map((transaction) => {
+            {transactionsToRender.map((transaction) => {
               return (
                 <TransactionRow
                   key={transaction._id}
