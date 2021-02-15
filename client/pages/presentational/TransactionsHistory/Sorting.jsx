@@ -52,7 +52,7 @@ const Sorting = () => {
       default:
         return ''
     }
-    dispatch(toggleSortDirection())
+
     return null
   }, [selectedOption])
 
@@ -78,48 +78,18 @@ const Sorting = () => {
           selectedOption={selectedOption}
           onChange={onChange}
         />
-        {/* <div className="radio">
+        <div className="mt-2">
           <input
-            type="radio"
-            id={`id-${inputOptions.transactionDate}`}
-            value={inputOptions.transactionDate}
-            checked={selectedOption === inputOptions.transactionDate}
-            onChange={onChange}
+            id="checkbox"
+            type="checkbox"
+            onChange={() => {
+              dispatch(toggleSortDirection())
+            }}
           />
-          <label
-            htmlFor={`id-${inputOptions.transactionDate}`}
-            className="ml-2"
-          >
-            Date
+          <label htmlFor="checkbox" className="ml-2">
+            Change sorting direction
           </label>
         </div>
-        <div className="radio">
-          <input
-            type="radio"
-            id={`id-${inputOptions.recipientName}`}
-            value={inputOptions.recipientName}
-            checked={selectedOption === inputOptions.recipientName}
-            onChange={onChange}
-          />
-          <label htmlFor={`id-${inputOptions.recipientName}`} className="ml-2">
-            Name
-          </label>
-        </div>
-        <div className="radio">
-          <input
-            type="radio"
-            id={`id-${inputOptions.transactionAmount}`}
-            value={inputOptions.transactionAmount}
-            checked={selectedOption === inputOptions.transactionAmount}
-            onChange={onChange}
-          />
-          <label
-            htmlFor={`id-${inputOptions.transactionAmount}`}
-            className="ml-2"
-          >
-            Amount
-          </label>
-        </div> */}
       </div>
     </div>
   )
