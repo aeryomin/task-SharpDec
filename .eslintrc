@@ -52,6 +52,7 @@
     "import/prefer-default-export": "warn",
     "no-underscore-dangle": ["error", { "allow": ["__REDUX_DEVTOOLS_EXTENSION__", "_id", "_doc"] }],
     "no-shadow": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "indent": "off"
   }
 }

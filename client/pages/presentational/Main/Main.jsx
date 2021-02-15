@@ -9,10 +9,6 @@ import {
 import Payment from './Payment/Payment'
 import Button, { DO_FUNCTION } from '../../../components/Button'
 import TransactionsHistory from '../TransactionsHistory/TransactionsHistory'
-import {
-  sortOptions,
-  setTransactionsToRender
-} from '../../../redux/actionCreators/transactionsToRenderActionCreator'
 
 const logout = () => {
   new Cookies().remove('token')

@@ -40,8 +40,8 @@ const TransactionRow = (props) => {
           )}:${formatDate(new Date(transaction.date).getMinutes())}`}
         </div>
         <div className="w-1/4 text-left">{transaction.recipientUsername}</div>
-        <div className="w-1/5 text-left">{transaction.amount}</div>
-        <div className="w-1/5 text-left">{transaction.balance}</div>
+        <div className="w-1/4 text-left">{transaction.amount}</div>
+        <div className="w-1/6 text-left">{transaction.balance}</div>
       </button>
     </div>
   )

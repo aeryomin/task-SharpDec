@@ -1,46 +1,39 @@
 import {
-  TOGGLE_DATE_SORT_OPTIONS,
-  TOGGLE_NAME_SORT_OPTIONS,
   SET_TRANSACTIONS_TO_RENDER,
+  SET_SORT_FIELD,
+  TOGGLE_SORT_DIRECTION,
   sortOptions
 } from '../actionCreators/transactionsToRenderActionCreator'
 
 const initialState = {
-  sortOption: {
-    date: sortOptions.date.ASCENDING,
-    name: sortOptions.name.ASCENDING
+  sortOptions: {
+    field: sortOptions.field.DATE,
+    direction: sortOptions.direction.ASCENDING
   },
   transactionsToRender: []
 }
 
 const transactionsToRenderReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_DATE_SORT_OPTIONS: {
+    case SET_SORT_FIELD: {
       return {
         ...state,
-        sortOption: {
-          ...state.sortOption,
-          date:
-            state.sortOption.date === sortOptions.date.ASCENDING
-              ? sortOptions.date.DESCENDING
-              : sortOptions.date.ASCENDING
-        }
+        sortOptions: { ...state.sortOptions, field: action.field }
       }
     }
-    case TOGGLE_NAME_SORT_OPTIONS: {
+    case TOGGLE_SORT_DIRECTION: {
       return {
         ...state,
-        sortOption: {
-          ...state.sortOption,
-          name:
-            state.sortOption.name === sortOptions.name.ASCENDING
-              ? sortOptions.name.DESCENDING
-              : sortOptions.name.ASCENDING
+        sortOptions: {
+          ...state.sortOptions,
+          direction:
+            state.sortOptions.direction === sortOptions.direction.ASCENDING
+              ? sortOptions.direction.DESCENDING
+              : sortOptions.direction.ASCENDING
         }
       }
     }
     case SET_TRANSACTIONS_TO_RENDER: {
-      // console.log('action.transactionsToRender', action.transactionsToRender)
       return { ...state, transactionsToRender: action.transactionsToRender }
     }
     default:

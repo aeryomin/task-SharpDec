@@ -3,15 +3,17 @@ import { useSelector, useDispatch } from 'react-redux'
 import TransactionRow from './TransactionRow'
 import SortIcon from './SortIcon'
 import {
-  toggleDateSortOptions,
-  setTransactionsToRender
+  setTransactionsToRender,
+  setSortField,
+  toggleSortDirection,
+  sortOptions
 } from '../../../redux/actionCreators/transactionsToRenderActionCreator'
 
 const TransactionsHistory = (props) => {
   const dispatch = useDispatch()
   const { users, setInputUserValue, setInputPWValue } = props
   const { payments } = useSelector((s) => s.transactions.transactions)
-  const { sortOption, transactionsToRender } = useSelector(
+  const { sortOptions: storeSortOptions, transactionsToRender } = useSelector(
     (s) => s.transactionsToRender
   )
   const [matches, setMatches] = useState(
@@ -43,36 +45,60 @@ const TransactionsHistory = (props) => {
   }, [])
 
   useEffect(() => {
-    dispatch(setTransactionsToRender(sortOption))
-  }, [sortOption, payments])
+    dispatch(setTransactionsToRender())
+  }, [storeSortOptions, payments])
 
   return (
     <div className="h-1/3 w-full md:w-1/2 m-2">
       TransactionsHistory
       <div className="w-full h-full border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <div
-          className="w-full "
+          className="w-full h-8"
           style={
             matches ? { paddingRight: `${padding}px` } : { paddingRight: '0px' }
           }
         >
-          <div className="flex w-full text-blue-500">
-            <div className="w-1/3 flex">
-              Date{' '}
+          <div className="flex w-full h-full text-blue-500">
+            <div className="w-1/3 h-full flex text-sm">
+              Date
               <button
                 type="button"
-                className="ml-6"
+                className=""
                 onClick={() => {
-                  dispatch(toggleDateSortOptions())
-                  // dispatch(setTransactionsToRender(sortOption))
+                  dispatch(setSortField(sortOptions.field.DATE))
+                  dispatch(toggleSortDirection())
                 }}
               >
                 <SortIcon />
               </button>
             </div>
-            <div className="w-1/4">Name</div>
-            <div className="w-1/5">Amount</div>
-            <div className="w-1/5">Balance</div>
+            <div className="w-1/4 flex text-sm">
+              Name
+              <button
+                type="button"
+                className=""
+                onClick={() => {
+                  dispatch(setSortField(sortOptions.field.NAME))
+                  dispatch(toggleSortDirection())
+                }}
+              >
+                <SortIcon />
+              </button>
+            </div>
+            <div className="w-1/4 text-sm">
+              Amount
+              <button
+                type="button"
+                className=""
+                onClick={() => {
+                  dispatch(setSortField(sortOptions.field.AMOUNT))
+                  dispatch(toggleSortDirection())
+                }}
+              >
+                <SortIcon />
+              </button>
+            </div>
+            <div className="w-1/6 text-sm">Balance</div>
           </div>
         </div>
         {!!transactionsToRender && (
