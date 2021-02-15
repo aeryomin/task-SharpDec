@@ -27,9 +27,9 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="h-screen flex flex-col justify-start">
+    <div className="h-screen w-screen flex flex-col justify-start">
       <Header />
-      <div className="flex flex-col md:flex-row md:justify-between h-2/3 md:h-1/2">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-between h-2/3 lg:h-1/2">
         <Payment
           users={users}
           inputUserValue={inputUserValue}

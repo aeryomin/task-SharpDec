@@ -21,7 +21,7 @@ const Payment = (props) => {
   }, [inputUserValue])
 
   return (
-    <div className="w-full md:w-1/2 h-1/3 m-2 mb-16">
+    <div className="w-full h-1/3 m-2 mb-16 lg:w-1/2">
       Do transaction
       <div className="h-full border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
         <div className="flex">
