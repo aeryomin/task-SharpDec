@@ -51,9 +51,9 @@ const Main = () => {
   }, [doUpdate])
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-start">
+    <div className="h-screen w-screen flex flex-col justify-start overflow-hidden">
       <Header />
-      <div className="w-full flex flex-col lg:flex-row lg:justify-between h-5/6 lg:h-1/2">
+      <div className="w-full flex flex-col items-center lg:flex-row lg:justify-between h-5/6 lg:h-1/2">
         <Payment
           users={users}
           inputUserValue={inputUserValue}
@@ -67,9 +67,9 @@ const Main = () => {
           setInputPWValue={setInputPWValue}
         />
       </div>
-      <div className="border border-gray-300 h-auto">
+      <div className="">
         <Button
-          content="Log out"
+          content="Logout"
           action={{ type: DO_FUNCTION, payload: logout }}
         />
       </div>

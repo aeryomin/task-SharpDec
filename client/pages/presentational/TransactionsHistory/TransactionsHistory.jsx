@@ -47,17 +47,17 @@ const TransactionsHistory = (props) => {
   }, [storeSortOptions, storeFilterOptions, payments])
 
   return (
-    <div className="h-1/3 w-full m-2 mr-5 lg:mx-0 lg:m-2 lg:w-1/2">
+    <div className="h-1/3 w-11/12 lg:mx-0 lg:m-2 lg:w-1/2">
       TransactionsHistory
       <div className="w-full h-full border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
         <div
-          className="w-full h-8"
+          className="w-full mb-1"
           style={
             matches ? { paddingRight: `${padding}px` } : { paddingRight: '0px' }
           }
         >
           <div className="flex w-full h-full text-blue-500">
-            <div className="w-1/3 h-full flex text-sm">Date</div>
+            <div className="w-2/5 h-full flex text-sm">Date</div>
             <div className="w-1/4 flex text-sm">Name</div>
             <div className="w-1/4 text-sm">Amount</div>
             <div className="w-1/6 text-sm">Balance</div>
@@ -85,7 +85,7 @@ const TransactionsHistory = (props) => {
           </div>
         )}
       </div>
-      <div className="flex">
+      <div className="flex justify-start">
         <Sorting />
         <Filtering />
       </div>

@@ -7,13 +7,13 @@ const InputPW = (props) => {
   const dispatch = useDispatch()
 
   return (
-    <div className="flex flex-col w-1/5">
+    <div className="w-1/5">
       <label className="text-sm" htmlFor="inputPW">
         Amount
       </label>
       <input
         id="inputPW"
-        className="p-2 border border-gray-400 rounded"
+        className="w-full p-2 border border-gray-400 rounded text-sm"
         type="text"
         placeholder="0"
         value={value}

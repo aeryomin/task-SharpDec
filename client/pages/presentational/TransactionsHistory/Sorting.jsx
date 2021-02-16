@@ -9,7 +9,7 @@ import {
 const SortInput = (props) => {
   const { inputOptions, onChange, selectedOption, content } = props
   return (
-    <div className="radio">
+    <div className="mb-2">
       <input
         type="radio"
         id={`id-${inputOptions}`}
@@ -59,7 +59,7 @@ const Sorting = () => {
   return (
     <div className="w-1/3">
       <div className="my-2">Sorting by:</div>
-      <div className="flex flex-col ml-4  text-sm">
+      <div className="flex flex-col ml-4 text-sm">
         <SortInput
           content="Date"
           inputOptions={inputOptions.transactionDate}
@@ -78,7 +78,7 @@ const Sorting = () => {
           selectedOption={selectedOption}
           onChange={onChange}
         />
-        <div className="mt-2">
+        <div className="mt-1 text-xs">
           <input
             id="checkbox"
             type="checkbox"

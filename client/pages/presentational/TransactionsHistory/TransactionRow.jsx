@@ -36,16 +36,16 @@ const TransactionRow = (props) => {
         }}
         className="flex w-full hover:bg-blue-300"
       >
-        <div className="w-1/3 text-left">
+        <div className="w-2/5 text-left overflow-x-auto">
           {`${formatDate(new Date(transaction.date).getDate())}:${formatDate(
             new Date(transaction.date).getMonth() + 1
           )}:${new Date(transaction.date).getFullYear()}/${formatDate(
             new Date(transaction.date).getHours()
           )}:${formatDate(new Date(transaction.date).getMinutes())}`}
         </div>
-        <div className="w-1/4 text-left">{transaction.recipientUsername}</div>
-        <div className="w-1/4 text-left">{transaction.amount}</div>
-        <div className="w-1/6 text-left">{transaction.balance}</div>
+        <div className="w-1/4 text-left overflow-x-auto">{transaction.recipientUsername}</div>
+        <div className="w-1/4 text-left overflow-x-auto">{transaction.amount}</div>
+        <div className="w-1/6 text-left overflow-x-auto">{transaction.balance}</div>
       </button>
     </div>
   )

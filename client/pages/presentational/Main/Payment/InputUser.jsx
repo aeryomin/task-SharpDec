@@ -7,10 +7,12 @@ const InputUser = (props) => {
   const dispatch = useDispatch()
 
   return (
-    <div className="mr-2">
-      <label className="text-sm" htmlFor="userInput">Username:</label>
+    <div className=" w-2/5">
+      <label className="text-sm" htmlFor="userInput">
+        Username:
+      </label>
       <input
-        className="border border-gray-400 rounded w-full p-2"
+        className="border border-gray-400 rounded w-full p-2 text-sm"
         id="userInput"
         type="text"
         placeholder="username"

@@ -46,10 +46,7 @@ app.use('/api/v1/transactions', transactionsRoutes)
 
 if (config.isSocketsEnabled) {
   io.on('connection', (socket) => {
-    console.log('a user connected', socket.id)
-
     socket.on('message', async (msg) => {
-      console.log(msg)
       if (msg.userId) {
         connections = { ...connections, [msg.userId]: socket.id }
       }
