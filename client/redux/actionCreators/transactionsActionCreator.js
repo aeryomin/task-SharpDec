@@ -30,8 +30,8 @@ export const submitPayment = () => async (dispatch, getState) => {
   const { recipientId, amount } = getState().transactions.payment
   const { transToken } = getState().account.user
 
-  if (recipientId && amount) {
-    const response = await fetch(
+  if (typeof recipientId !== 'undefined' && typeof amount !== 'undefined') {
+    await fetch(
       '/api/v1/transactions/protected/transactions',
       {
         method: 'POST',
@@ -43,11 +43,10 @@ export const submitPayment = () => async (dispatch, getState) => {
       }
     )
 
-    const transaction = await response.json()
-    console.log('transaction: ', transaction)
-
     getSocket().emit('message', { type: SEND_TRANSACTIONS, recipientId })
 
     dispatch(getTransactions())
+    dispatch(setRecipient(''))
+    dispatch(setAmount(''))
   }
 }

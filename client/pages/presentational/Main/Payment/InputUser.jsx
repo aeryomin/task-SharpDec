@@ -20,6 +20,12 @@ const InputUser = (props) => {
         autoComplete="off"
         onChange={(event) => {
           setValue(event.target.value)
+          const recipient = users.find(
+            (user) => user.username === event.target.value
+          )
+          if (recipient) {
+            dispatch(setRecipient(recipient._id))
+          } else dispatch(setRecipient(''))
         }}
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
@@ -28,7 +34,7 @@ const InputUser = (props) => {
               (user) => user.username === event.target.value
             )
             if (recipient) {
-              dispatch(setRecipient(recipient._id, recipient.username))
+              dispatch(setRecipient(recipient._id))
             }
           }
         }}

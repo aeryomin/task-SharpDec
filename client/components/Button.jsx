@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React from 'react'
 import store, { history } from '../redux'
 
@@ -10,12 +9,10 @@ export const EMPTY = 'EMPTY'
 const switchAction = (action) => {
   switch (action.type) {
     case DO_FUNCTION: {
-      // console.log('do func')
       action.payload()
       break
     }
     case DO_DISPATCH: {
-      console.log('do dispatch')
       store.dispatch(action.payload())
       break
     }

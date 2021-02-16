@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import InputUser from './InputUser'
 import Autocomplete, { filterUser } from './Autocomplete'
 import InputPW from './InputPW'
-import Button, { DO_DISPATCH } from '../../../../components/Button'
+// import Button, { DO_DISPATCH } from '../../../../components/Button'
 import { submitPayment } from '../../../../redux/actionCreators/transactionsActionCreator'
 
 const Payment = (props) => {
@@ -13,15 +14,16 @@ const Payment = (props) => {
     inputPWValue,
     setInputPWValue
   } = props
+  const dispatch = useDispatch()
 
   useEffect(() => {
     filterUser(users, inputUserValue)
   }, [inputUserValue])
 
   return (
-    <div className="w-11/12 lg:h-1/3 mt-2 mb-2 lg:w-1/2">
+    <div className="w-11/12 mt-2 mb-2 lg:h-1/3 lg:w-5/12">
       Do transaction
-      <div className="relative border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
+      <div className=" lg:h-full relative border border-gray-200 rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ">
         <div className="flex justify-between">
           <InputUser
             value={inputUserValue}
@@ -30,13 +32,17 @@ const Payment = (props) => {
           />
           <InputPW value={inputPWValue} setValue={setInputPWValue} />
           <div className="flex items-end">
-            <Button
-              content="Commit"
-              action={{
-                type: DO_DISPATCH,
-                payload: submitPayment
+            <button
+              className="bg-blue-500 border border-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              type="button"
+              onClick={() => {
+                dispatch(submitPayment())
+                setInputUserValue('')
+                setInputPWValue('')
               }}
-            />
+            >
+              Commit
+            </button>
           </div>
         </div>
         {inputUserValue && (

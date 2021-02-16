@@ -58,7 +58,7 @@ const Sorting = () => {
 
   return (
     <div className="w-1/3">
-      <div className="my-2">Sorting by:</div>
+      <div className="my-2 lg:mt-8">Sorting by:</div>
       <div className="flex flex-col ml-4 text-sm">
         <SortInput
           content="Date"

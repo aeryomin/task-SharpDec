@@ -6,7 +6,6 @@ const Home = () => {
     <div>
       Home
       <div className="flex justify-around">
-
         <Button
           content="Login"
           action={{ type: FOLLOW_TO_LINK, payload: '/login' }}

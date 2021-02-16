@@ -14,7 +14,7 @@ const FilterField = (props) => {
 
   return (
     <div className="flex ml-4 text-sm mb-2">
-      <div className="">
+      <div className="h-5">
         <input
           id="checkbox"
           type="checkbox"
@@ -33,9 +33,9 @@ const FilterField = (props) => {
         </label>
       </div>
       {isChecked && (
-        <div className="w-1/2 md:w-1/3 lg:w-1/3 ml-1">
+        <div className="w-1/2 lg:w-1/3 ml-1">
           <input
-            className="w-full border border-gray-300 rounded px-1"
+            className="w-full h-5 border border-gray-300 rounded px-1"
             type="text"
             placeholder={placeholder}
             value={value}
@@ -53,19 +53,19 @@ const FilterField = (props) => {
 const Filtering = () => {
   return (
     <div className="w-2/3">
-      <div className="my-2">Filtering:</div>
+      <div className="my-2 lg:mt-8">Filtering by:</div>
       <FilterField
-        labelContent="By date"
+        labelContent="Date"
         setFilter={setDateFilter}
         placeholder="15:02:2021"
       />
       <FilterField
-        labelContent="By name"
+        labelContent="Name"
         setFilter={setNameFilter}
-        placeholder="Jon Dow"
+        placeholder="John Doe"
       />
       <FilterField
-        labelContent="By amount"
+        labelContent="Amount"
         setFilter={setAmountFilter}
         placeholder="100"
       />

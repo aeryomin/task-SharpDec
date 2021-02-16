@@ -7,8 +7,7 @@
     "dev": "yarn run watch:server & yarn run watch:client",
     "dev:build": "webpack --config webpack.dev.config.js",
     "watch:client": "webpack serve --config webpack.dev.config.js",
-    "watch:server": "nodemon startServer.js",
-    "watch:server2": "nodemon startServer2.js"
+    "watch:server": "nodemon startServer.js"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.13",
