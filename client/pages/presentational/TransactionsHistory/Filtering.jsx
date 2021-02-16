@@ -15,9 +15,14 @@ const Filtering = () => {
           <input
             id="checkbox"
             type="checkbox"
-            chacked={isChecked}
+            checked={isChecked}
             value="date"
             onChange={() => {
+              console.log(isChecked)
+              if (isChecked) {
+                dispatch(setDateFilter(null))
+                setDateValue('')
+              }
               setIsChecked(!isChecked)
             }}
           />

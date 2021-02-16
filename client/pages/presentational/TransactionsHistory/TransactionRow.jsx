@@ -5,15 +5,16 @@ import {
   setAmount
 } from '../../../redux/actionCreators/transactionsActionCreator'
 
+export const formatDate = (date) => {
+  if (String(date).length < 2) {
+    return '0'.concat(String(date))
+  }
+  return date
+}
+
 const TransactionRow = (props) => {
   const { users, transaction, setInputUserValue, setInputPWValue } = props
   const dispatch = useDispatch()
-  const formatDate = (date) => {
-    if (String(date).length < 2) {
-      return '0'.concat(String(date))
-    }
-    return date
-  }
 
   return (
     <div className="w-full text-xs">
@@ -33,7 +34,7 @@ const TransactionRow = (props) => {
         className="flex w-full hover:bg-blue-300"
       >
         <div className="w-1/3 text-left">
-          {`${new Date(transaction.date).getDate()}:${formatDate(
+          {`${formatDate(new Date(transaction.date).getDate())}:${formatDate(
             new Date(transaction.date).getMonth() + 1
           )}:${new Date(transaction.date).getFullYear()}/${formatDate(
             new Date(transaction.date).getHours()

@@ -9,9 +9,11 @@ const TransactionsHistory = (props) => {
   const dispatch = useDispatch()
   const { users, setInputUserValue, setInputPWValue } = props
   const { payments } = useSelector((s) => s.transactions.transactions)
-  const { sortOptions: storeSortOptions, transactionsToRender } = useSelector(
-    (s) => s.transactionsToRender
-  )
+  const {
+    sortOptions: storeSortOptions,
+    filterOptions: storeFilterOptions,
+    transactionsToRender
+  } = useSelector((s) => s.transactionsToRender)
   const [matches, setMatches] = useState(
     window.matchMedia('(min-width: 768px)').matches
   )
@@ -42,7 +44,7 @@ const TransactionsHistory = (props) => {
 
   useEffect(() => {
     dispatch(setTransactionsToRender())
-  }, [storeSortOptions, payments])
+  }, [storeSortOptions, storeFilterOptions, payments])
 
   return (
     <div className="h-1/3 w-full m-2 mr-5 lg:mx-0 lg:m-2 lg:w-1/2">

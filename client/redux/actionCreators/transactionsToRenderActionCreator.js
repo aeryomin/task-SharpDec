@@ -1,4 +1,4 @@
-// import store from '..'
+import { formatDate } from '../../pages/presentational/TransactionsHistory/TransactionRow'
 
 export const SET_TRANSACTIONS_TO_RENDER = 'SET_TRANSACTIONS_TO_RENDER'
 export const SET_SORT_FIELD = 'SET_SORT_FIELD'
@@ -34,7 +34,6 @@ export const toggleSortDirection = () => {
 }
 
 export const setDateFilter = (date) => {
-  console.log(date)
   return { type: SET_DATE_FILTER, date }
 }
 
@@ -49,7 +48,10 @@ export const setAmountFilter = (amount) => {
 export const setTransactionsToRender = () => async (dispatch, getState) => {
   const response = await fetch('/api/v1/transactions/protected/transactions')
   const transactions = await response.json()
-  const { sortOptions: storeSortOptions } = getState().transactionsToRender
+  const {
+    sortOptions: storeSortOptions,
+    filterOptions: storeFilterOptions
+  } = getState().transactionsToRender
 
   let transactionsToRender = []
   transactionsToRender = [...transactions.payments]
@@ -84,7 +86,18 @@ export const setTransactionsToRender = () => async (dispatch, getState) => {
       return ''
   }
 
-  // console.log('after transactionsToRender', transactionsToRender)
+  if (storeFilterOptions.date) {
+    transactionsToRender = transactionsToRender.filter((tranaction) => {
+      const transDate = new Date(tranaction.date)
+      const transDateArr = []
+      transDateArr.push(formatDate(transDate.getDate()))
+      transDateArr.push(formatDate(transDate.getMonth() + 1))
+      transDateArr.push(transDate.getFullYear())
+      const transDateStr = transDateArr.join(':')
+
+      return storeFilterOptions.date === transDateStr
+    })
+  }
 
   dispatch({ type: SET_TRANSACTIONS_TO_RENDER, transactionsToRender })
   return ''
