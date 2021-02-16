@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   setRecipient,
   setAmount
@@ -15,9 +15,12 @@ export const formatDate = (date) => {
 const TransactionRow = (props) => {
   const { users, transaction, setInputUserValue, setInputPWValue } = props
   const dispatch = useDispatch()
+  const { username } = useSelector((s) => s.account.user)
+  const isCredit =
+    transaction.recipientUsername === username ? 'text-green-500' : ''
 
   return (
-    <div className="w-full text-xs">
+    <div className={`w-full text-xs ${isCredit}`}>
       <button
         type="button"
         onClick={() => {
