@@ -25,7 +25,22 @@ const initialState = {
 const transactionsToRenderReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_DATE_FILTER: {
-      return { ...state, filterOptions: { ...state.filterOptions, date: action.date } }
+      return {
+        ...state,
+        filterOptions: { ...state.filterOptions, date: action.date }
+      }
+    }
+    case SET_NAME_FILTER: {
+      return {
+        ...state,
+        filterOptions: { ...state.filterOptions, name: action.name }
+      }
+    }
+    case SET_AMOUNT_FILTER: {
+      return {
+        ...state,
+        filterOptions: { ...state.filterOptions, amount: action.amount }
+      }
     }
     case SET_SORT_FIELD: {
       return {

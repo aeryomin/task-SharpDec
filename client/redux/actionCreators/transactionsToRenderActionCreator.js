@@ -99,6 +99,18 @@ export const setTransactionsToRender = () => async (dispatch, getState) => {
     })
   }
 
+  if (storeFilterOptions.name) {
+    transactionsToRender = transactionsToRender.filter((tranaction) => {
+      return storeFilterOptions.name === tranaction.recipientUsername
+    })
+  }
+
+  if (storeFilterOptions.amount) {
+    transactionsToRender = transactionsToRender.filter((tranaction) => {
+      return Number(storeFilterOptions.amount) === Number(tranaction.amount)
+    })
+  }
+
   dispatch({ type: SET_TRANSACTIONS_TO_RENDER, transactionsToRender })
   return ''
 }
