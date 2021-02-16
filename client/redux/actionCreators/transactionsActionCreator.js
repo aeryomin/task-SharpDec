@@ -28,7 +28,7 @@ export const setAmount = (amount) => {
 
 export const submitPayment = () => async (dispatch, getState) => {
   const { recipientId, amount } = getState().transactions.payment
-  const { transToken, _id } = getState().account.user
+  const { transToken } = getState().account.user
 
   if (recipientId && amount) {
     const response = await fetch(
@@ -46,7 +46,7 @@ export const submitPayment = () => async (dispatch, getState) => {
     const transaction = await response.json()
     console.log('transaction: ', transaction)
 
-    getSocket().emit('message', { type: SEND_TRANSACTIONS, userId: _id })
+    getSocket().emit('message', { type: SEND_TRANSACTIONS, recipientId })
 
     dispatch(getTransactions())
   }

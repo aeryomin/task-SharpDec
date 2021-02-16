@@ -9,6 +9,7 @@ import {
 import Payment from './Payment/Payment'
 import Button, { DO_FUNCTION } from '../../../components/Button'
 import TransactionsHistory from '../TransactionsHistory/TransactionsHistory'
+import { getSocket } from '../../../redux'
 
 const logout = () => {
   new Cookies().remove('token')
@@ -17,14 +18,37 @@ const logout = () => {
 
 const Main = () => {
   const dispatch = useDispatch()
+  const { user } = useSelector((s) => s.account)
   const { users } = useSelector((s) => s.transactions)
+  const { doUpdate } = useSelector((s) => s.socket)
   const [inputUserValue, setInputUserValue] = useState('')
   const [inputPWValue, setInputPWValue] = useState('')
 
   useEffect(() => {
     dispatch(getUsers())
     dispatch(getTransactions())
+    getSocket().emit('message', { userId: user._id })
   }, [])
+
+  useEffect(() => {
+    getSocket().on('message', (msg) => {
+      if (msg.type) {
+        switch (msg.type) {
+          case 'ADD_REQUEST_TO_UPDATE_TRANSACTIONS': {
+            dispatch(msg)
+            break
+          }
+          default:
+            return ''
+        }
+      }
+      return ''
+    })
+  }, [])
+
+  useEffect(() => {
+    dispatch(getTransactions())
+  }, [doUpdate])
 
   return (
     <div className="h-screen w-screen flex flex-col justify-start">

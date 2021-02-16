@@ -26,12 +26,6 @@ if (
   process.env.ENABLE_SOCKETS
 ) {
   socket = io(`http://localhost:${process.env.PORT}`)
-
-  // socket.emit('message', 'Hi, server!!!')
-
-  // socket.on('message', (msg) => {
-  //   console.log(msg)
-  // })
 }
 
 export function getSocket() {

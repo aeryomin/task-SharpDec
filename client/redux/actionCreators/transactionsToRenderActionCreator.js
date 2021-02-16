@@ -55,7 +55,6 @@ export const setTransactionsToRender = () => async (dispatch, getState) => {
 
   let transactionsToRender = []
   transactionsToRender = [...transactions.payments]
-  // console.log('transactionsToRender', transactionsToRender)
 
   switch (storeSortOptions.field) {
     case sortOptions.field.DATE: {

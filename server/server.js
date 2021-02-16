@@ -46,24 +46,32 @@ app.use('/api/v1/transactions', transactionsRoutes)
 
 if (config.isSocketsEnabled) {
   io.on('connection', (socket) => {
-    console.log('-->> a user connected', socket.id)
-    // console.log(connections)
+    console.log('a user connected', socket.id)
 
     socket.on('message', async (msg) => {
       console.log(msg)
-      connections = { ...connections, [msg.userId]: socket.id }
-      console.log(connections)
-      // switch (msg) {
-      //   case 'SEND_TRANSACTIONS': {
-      //     console.log('Transactions are updated')
-      //     // io.emit('message', { type: 'UPDATE_TRANSACTIONS' })
-      //     return ''
-      //   }
-      //   default:
-      //     return ''
-      // }
-      // console.log(msg)
-      // io.emit('message', 'Hi, client')
+      if (msg.userId) {
+        connections = { ...connections, [msg.userId]: socket.id }
+      }
+      if (msg.type) {
+        switch (msg.type) {
+          case 'SEND_TRANSACTIONS': {
+            const recipientSocketId =
+              connections[
+                Object.keys(connections).find(
+                  (userId) => userId === msg.recipientId
+                )
+              ]
+            io.to(recipientSocketId).emit('message', {
+              type: 'ADD_REQUEST_TO_UPDATE_TRANSACTIONS'
+            })
+            break
+          }
+          default:
+            return ''
+        }
+      }
+      return ''
     })
   })
 }

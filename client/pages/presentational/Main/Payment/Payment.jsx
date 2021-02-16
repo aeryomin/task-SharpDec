@@ -13,8 +13,6 @@ const Payment = (props) => {
     inputPWValue,
     setInputPWValue
   } = props
-  // const [inputUserValue, setInputUserValue] = useState('')
-  // const [inputPWValue, setInputPWValue] = useState('')
 
   useEffect(() => {
     filterUser(users, inputUserValue)
