@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { history } from '..'
 
 export const UPDATE_USERNAME = 'UPDATE_USERNAME'

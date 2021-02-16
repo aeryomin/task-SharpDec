@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import jwt from 'jsonwebtoken'
 import Account from '../model/Account.model'
 import Transactions from '../model/Transactions.model'
@@ -15,13 +14,10 @@ export async function getUsers(req, res) {
 }
 
 export async function createTransaction(req, res) {
-  // console.log('req.body: ', req.body)
-
   try {
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
 
     const account = await Account.findById(jwtAccount.uid)
-    // console.log('account: ', account)
     if (account === null) {
       throw new Error('Account not found')
     }
@@ -29,10 +25,8 @@ export async function createTransaction(req, res) {
     let accountTransactions = await Transactions.findOne({
       transactionToken: account.transactionToken
     })
-    // console.log('accountTransactions: ', accountTransactions)
 
     const recipient = await Account.findById(req.body.recipientId)
-    // console.log('recipient: ', recipient)
 
     const recipientTransactions = await Transactions.findOne({
       transactionToken: recipient.transactionToken

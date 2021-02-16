@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import InputUser from './InputUser'
 import Autocomplete, { filterUser } from './Autocomplete'
 import InputPW from './InputPW'
-// import Button, { DO_DISPATCH } from '../../../../components/Button'
 import { submitPayment } from '../../../../redux/actionCreators/transactionsActionCreator'
 
 const Payment = (props) => {

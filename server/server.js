@@ -12,7 +12,6 @@ import passportJWT from './services/passport'
 import config from './config'
 import authRoutes from './routes/api/auth.routes'
 import transactionsRoutes from './routes/api/transactions.routes'
-// import Transaction from './model/Transactions.model'
 
 mongooseService.connect()
 

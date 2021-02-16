@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
 import Account from '../model/Account.model'
@@ -70,8 +69,6 @@ export async function login(req, res) {
 
 export async function getAccountData(req, res) {
   try {
-    // console.log('-->> req: ', req.cookies)
-
     const jwtAccount = jwt.verify(req.cookies.token, config.secret)
     const account = await Account.findById(jwtAccount.uid)
 
