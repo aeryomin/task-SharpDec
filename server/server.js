@@ -63,8 +63,14 @@ if (config.isSocketsEnabled) {
             })
             break
           }
+          case 'SEND_USERS': {
+            socket.broadcast.emit('message', {
+              type: 'ADD_REQUEST_TO_SEND_USERS'
+            })
+            break
+          }
           default:
-            return ''
+            break
         }
       }
       return ''

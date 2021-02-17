@@ -17,7 +17,7 @@ const Autocomplete = (props) => {
           <button
             key={user._id}
             type="button"
-            className="w-full text-left mb-0 px-2 py-2 bg-gray-100 hover:bg-gray-300"
+            className="w-full text-left mb-0 px-2 py-2 bg-gray-200 hover:bg-gray-400"
             onClick={() => {
               setValue(user.username)
               dispatch(setRecipient(user._id, user.username))

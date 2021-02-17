@@ -20,7 +20,7 @@ const Main = () => {
   const dispatch = useDispatch()
   const { user } = useSelector((s) => s.account)
   const { users } = useSelector((s) => s.transactions)
-  const { doUpdate } = useSelector((s) => s.socket)
+  const { doUpdate, sendUsers } = useSelector((s) => s.socket)
   const [inputUserValue, setInputUserValue] = useState('')
   const [inputPWValue, setInputPWValue] = useState('')
 
@@ -38,8 +38,12 @@ const Main = () => {
             dispatch(msg)
             break
           }
+          case 'ADD_REQUEST_TO_SEND_USERS': {
+            dispatch(msg)
+            break
+          }
           default:
-            return ''
+            break
         }
       }
       return ''
@@ -49,6 +53,10 @@ const Main = () => {
   useEffect(() => {
     dispatch(getTransactions())
   }, [doUpdate])
+
+    useEffect(() => {
+      dispatch(getUsers())
+    }, [sendUsers])
 
   return (
     <div className="h-screen w-screen flex flex-col justify-start overflow-hidden">

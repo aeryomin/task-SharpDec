@@ -1,4 +1,5 @@
-import { history } from '..'
+import { history, getSocket } from '..'
+import { SEND_USERS } from '../../constants/socket'
 
 export const UPDATE_USERNAME = 'UPDATE_USERNAME'
 export const UPDATE_EMAIL = 'UPDATE_EMAIL'
@@ -75,5 +76,6 @@ export const registration = () => async (dispatch, getState) => {
     user: account.user,
     balance: 500
   })
+  getSocket().emit('message', { type: SEND_USERS })
   history.push('/main')
 }
