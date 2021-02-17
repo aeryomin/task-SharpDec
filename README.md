@@ -13,7 +13,7 @@
   $ yarn install
   ```
 
-3. Copy .env.example file to .env and make the necessary changes there
+3. Copy example.env file to .env and make the necessary changes there
 
 
 4. Run project in Dev mode
