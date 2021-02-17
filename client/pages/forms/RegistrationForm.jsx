@@ -12,12 +12,16 @@ import {
 } from '../../redux/actionCreators/accountActionCreator'
 
 const RegistrationForm = () => {
-  const { username, email, password, secondPassword } = useSelector((s) => s.account)
+  const { username, email, password, secondPassword } = useSelector(
+    (s) => s.account
+  )
 
   const getPayload =
     password === secondPassword && username !== '' && email !== ''
       ? { type: DO_DISPATCH, payload: registration }
       : { type: EMPTY }
+
+  const havePasswords = () => Boolean(password) || Boolean(secondPassword)
 
   const isPasswodrsMatches = () => {
     return password === secondPassword
@@ -51,13 +55,16 @@ const RegistrationForm = () => {
             placeholder="Password"
             action={setSecondPasswordActionCreator}
           />
-          {isPasswodrsMatches() ? (
-            <div className="text-green-600 mb-3">Passwords matches</div>
-          ) : (
-            <div className="text-red-600 mb-3">
-              Passwords don&apos;t matches
+          {!havePasswords() && <div className="h-8 mb-3" />}
+          {isPasswodrsMatches() && havePasswords() && (
+            <div className="h-8 text-green-600 mb-3">Passwords match</div>
+          )}
+          {!isPasswodrsMatches() && havePasswords() && (
+            <div className="h-8 text-red-600 mb-3">
+              Passwords don&apos;t match
             </div>
           )}
+
           <div className="flex justify-between items-center">
             <Button content="Registration" action={getPayload} />
             <div className="text-gray-400 flex items-center">
