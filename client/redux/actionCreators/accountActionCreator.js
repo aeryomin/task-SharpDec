@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { history, getSocket } from '..'
 import { SEND_USERS } from '../../constants/socket'
 
@@ -31,44 +32,28 @@ export const setSecondPasswordActionCreator = (password) => ({
 export const logIn = () => async (dispatch, getState) => {
   const { email, password } = getState().account
 
-  const response = await fetch('/api/v1/auth', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email,
-      password
-    })
-  })
-
-  const account = await response.json()
+  const response = await axios.post('/api/v1/auth', { email, password })
+  const account = response.data
 
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
 }
 
 export const tryLogIn = () => async (dispatch) => {
-  const response = await fetch('/api/v1/auth')
-  const account = await response.json()
+  const response = await axios('/api/v1/auth')
+  const account = response.data
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
 }
 
 export const registration = () => async (dispatch, getState) => {
   const { username, email, password } = getState().account
-  const response = await fetch('/api/v1/auth/registration', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      username,
-      email,
-      password
-    })
+  const response = await axios.post('/api/v1/auth/registration', {
+    username,
+    email,
+    password
   })
-  const account = await response.json()
+  const account = response.data
 
   dispatch({
     type: REGISTRATION,

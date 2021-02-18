@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { formatDate } from '../../pages/presentational/TransactionsHistory/TransactionRow'
 
 export const SET_TRANSACTIONS_TO_RENDER = 'SET_TRANSACTIONS_TO_RENDER'
@@ -46,12 +47,13 @@ export const setAmountFilter = (amount) => {
 }
 
 export const setTransactionsToRender = () => async (dispatch, getState) => {
-  const response = await fetch('/api/v1/transactions/protected/transactions')
-  const transactions = await response.json()
   const {
     sortOptions: storeSortOptions,
     filterOptions: storeFilterOptions
   } = getState().transactionsToRender
+
+  const response = await axios('/api/v1/transactions/protected/transactions')
+  const transactions = response.data
 
   let transactionsToRender = []
   transactionsToRender = [...transactions.payments]
