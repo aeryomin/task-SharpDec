@@ -51,8 +51,7 @@ export const registration = () => async (dispatch, getState) => {
   dispatch({
     type: REGISTRATION,
     token: account.token,
-    user: account.user,
-    balance: 500
+    user: account.user
   })
   getSocket().emit('message', { type: SEND_USERS })
   history.push('/main')

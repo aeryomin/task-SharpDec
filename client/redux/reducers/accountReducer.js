@@ -17,8 +17,7 @@ const initialState = {
   password: '',
   secondPassword: '',
   token: cookies.get('token'),
-  user: null,
-  balance: 0
+  user: null
 }
 
 const accountReducer = (state = initialState, action) => {
@@ -39,7 +38,7 @@ const accountReducer = (state = initialState, action) => {
       return { ...state, token: action.token, password: '', user: action.user }
     }
     case REGISTRATION: {
-      return { ...state, token: action.token, password: '', user: action.user, balance: action.balance }
+      return { ...state, token: action.token, password: '', user: action.user }
     }
     default:
       return state
