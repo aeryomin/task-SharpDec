@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { history, getSocket } from '..'
 import { SEND_USERS } from '../../constants/socket'
+import api from '../fetch/api'
 
 export const UPDATE_USERNAME = 'UPDATE_USERNAME'
 export const UPDATE_EMAIL = 'UPDATE_EMAIL'
@@ -31,29 +31,22 @@ export const setSecondPasswordActionCreator = (password) => ({
 
 export const logIn = () => async (dispatch, getState) => {
   const { email, password } = getState().account
-
-  const response = await axios.post('/api/v1/auth', { email, password })
-  const account = response.data
+  const account = await api.loginFetch(email, password)
 
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
 }
 
 export const tryLogIn = () => async (dispatch) => {
-  const response = await axios('/api/v1/auth')
-  const account = response.data
+  const account = await api.tryLogInFetch()
+
   dispatch({ type: LOGIN, token: account.token, user: account.user })
   history.push('/main')
 }
 
 export const registration = () => async (dispatch, getState) => {
   const { username, email, password } = getState().account
-  const response = await axios.post('/api/v1/auth/registration', {
-    username,
-    email,
-    password
-  })
-  const account = response.data
+  const account = await api.registrationFetch(username, email, password)
 
   dispatch({
     type: REGISTRATION,

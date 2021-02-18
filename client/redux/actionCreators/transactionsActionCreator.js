@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { getSocket } from '..'
 import { SEND_TRANSACTIONS } from '../../constants/socket'
+import api from '../fetch/api'
 
 export const GET_USERS = 'GET_USERS'
 export const SET_RECIPIENT = 'SET_PAYMENT_DATA'
@@ -8,14 +8,14 @@ export const SET_AMOUNT = 'SET_AMOUNT'
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS'
 
 export const getUsers = () => async (dispatch) => {
-  const response = await axios('/api/v1/transactions/protected/users/list')
-  const users = response.data
+  const users = await api.getUsersFetch()
+
   dispatch({ type: GET_USERS, users })
 }
 
 export const getTransactions = () => async (dispatch) => {
-  const response = await axios('/api/v1/transactions/protected/transactions')
-  const transactions = response.data
+  const transactions = await api.getTransactionsFetch()
+
   dispatch({ type: GET_TRANSACTIONS, transactions })
 }
 
@@ -32,18 +32,7 @@ export const submitPayment = () => async (dispatch, getState) => {
   const { transactionToken } = getState().account.user
 
   if (typeof recipientId !== 'undefined' && typeof amount !== 'undefined') {
-    await axios.post(
-      '/api/v1/transactions/protected/transactions',
-      {
-        recipientId,
-        amount
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${transactionToken}`
-        }
-      }
-    )
+    await api.submitPaymentFetch(recipientId, amount, transactionToken)
 
     getSocket().emit('message', { type: SEND_TRANSACTIONS, recipientId })
 
