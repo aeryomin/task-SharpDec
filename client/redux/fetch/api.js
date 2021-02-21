@@ -20,43 +20,85 @@ const TRANSACTIONS = {
   }
 }
 
+const errorsHandler = (err) => {
+  if (err.response) {
+    // eslint-disable-next-line no-console
+    console.log('err.response', err.response.data)
+  } else if (err.request) {
+    // eslint-disable-next-line no-console
+    console.log('err.request', err.request)
+  }
+  return err
+}
+
 export default {
   loginFetch: async (email, password) => {
-    const response = await axios.post(ACCOUNT.POST.LOGIN, { email, password })
-    return response.data
+    try {
+      const response = await axios.post(ACCOUNT.POST.LOGIN, { email, password })
+      return response.data
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   },
   tryLogInFetch: async () => {
-    const response = await axios(ACCOUNT.GET.TRY_LOGIN)
-    return response.data
+    try {
+      const response = await axios(ACCOUNT.GET.TRY_LOGIN)
+      return response.data
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   },
   registrationFetch: async (username, email, password) => {
-    const response = await axios.post(ACCOUNT.POST.REGISTRATION, {
-      username,
-      email,
-      password
-    })
-    return response.data
+    try {
+      const response = await axios.post(ACCOUNT.POST.REGISTRATION, {
+        username,
+        email,
+        password
+      })
+      return response.data
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   },
   getUsersFetch: async () => {
-    const response = await axios(TRANSACTIONS.GET.GET_USERS)
-    return response.data
+    try {
+      const response = await axios(TRANSACTIONS.GET.GET_USERS)
+      return response.data
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   },
   getTransactionsFetch: async () => {
-    const response = await axios(TRANSACTIONS.GET.GET_TRANSACTIONS)
-    return response.data
+    try {
+      const response = await axios(TRANSACTIONS.GET.GET_TRANSACTIONS)
+      return response.data
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   },
   submitPaymentFetch: async (recipientId, amount, transactionToken) => {
-    await axios.post(
-      TRANSACTIONS.POST.SUBMIT_PAYMENT,
-      {
-        recipientId,
-        amount
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${transactionToken}`
+    try {
+      await axios.post(
+        TRANSACTIONS.POST.SUBMIT_PAYMENT,
+        {
+          recipientId,
+          amount
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${transactionToken}`
+          }
         }
-      }
-    )
+      )
+      return ''
+    } catch (err) {
+      errorsHandler(err)
+    }
+    return ''
   }
 }
