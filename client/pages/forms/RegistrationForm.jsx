@@ -1,8 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 import FormInput from '../../components/FormInput'
-import Button, { DO_DISPATCH, EMPTY } from '../../components/Button'
 import {
   setUsernameActionCreator,
   setEmailActionCreator,
@@ -12,14 +12,11 @@ import {
 } from '../../redux/actionCreators/accountActionCreator'
 
 const RegistrationForm = () => {
-  const { username, email, password, secondPassword } = useSelector(
+  const dispatch = useDispatch()
+  const { password, secondPassword } = useSelector(
     (s) => s.account
   )
-
-  const getPayload =
-    password === secondPassword && username !== '' && email !== ''
-      ? { type: DO_DISPATCH, payload: registration }
-      : { type: EMPTY }
+  const { handleSubmit, register, errors, getValues } = useForm()
 
   const havePasswords = () => Boolean(password) || Boolean(secondPassword)
 
@@ -27,33 +24,58 @@ const RegistrationForm = () => {
     return password === secondPassword
   }
 
+  const onSubmit = () => {
+    if (password === secondPassword) {
+      dispatch(registration())
+    }
+  }
+
   return (
     <div className="w-screen h-screen bg-gray-100 flex justify-center items-center">
       <div className=" max-w-xs ">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        >
           <FormInput
             type="text"
+            name="username"
             title="Username"
             placeholder="Username"
             action={setUsernameActionCreator}
+            register={register}
+            errors={errors}
+            getValues={getValues}
           />
           <FormInput
             type="text"
-            title="Email"
+            name="email"
+            title="E-mail"
             placeholder="jsmith@gmail.com"
             action={setEmailActionCreator}
+            register={register}
+            errors={errors}
+            getValues={getValues}
           />
           <FormInput
             type="password"
+            name="password"
             title="Password"
             placeholder="Password"
             action={setPasswordActionCreator}
+            register={register}
+            errors={errors}
+            getValues={getValues}
           />
           <FormInput
             type="password"
+            name="second password"
             title="Repeat password"
             placeholder="Password"
             action={setSecondPasswordActionCreator}
+            register={register}
+            errors={errors}
+            getValues={getValues}
           />
           {!havePasswords() && <div className="h-8 mb-3" />}
           {isPasswodrsMatches() && havePasswords() && (
@@ -66,7 +88,15 @@ const RegistrationForm = () => {
           )}
 
           <div className="flex justify-between items-center">
-            <Button content="Registration" action={getPayload} />
+            <div className="flex items-center justify-center">
+              <button
+                className="bg-blue-500 border border-blue-500 hover:bg-blue-700
+                 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Signup
+              </button>
+            </div>
             <div className="text-gray-400 flex items-center">
               or
               <Link className="ml-2 text-blue-600 hover:underline" to="/login">

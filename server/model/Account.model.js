@@ -39,7 +39,6 @@ accountSchema.pre('save', async function (next) {
 
 accountSchema.method({
   passwordMatches(password) {
-    // console.log(bcrypt.hashSync(password), this.password)
     return bcrypt.compareSync(password, this.password)
   }
 })

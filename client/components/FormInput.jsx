@@ -1,11 +1,58 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 
 const FormInput = (props) => {
-  const [value, setValue] = useState('')
-  const borderColor = value ? 'gray-200' : 'red-300'
+  const {
+    type,
+    name,
+    title,
+    placeholder,
+    action,
+    register,
+    errors,
+    getValues
+  } = props
+  const borderColor = getValues(name) ? 'gray-200' : 'red-300'
   const dispatch = useDispatch()
-  const { type, title, placeholder, action } = props
+
+  const onChange = (name) => {
+    if (type === 'password') {
+      dispatch(action(getValues(name)))
+    }
+  }
+
+  const onBlur = (name) => {
+    dispatch(action(getValues(name)))
+  }
+
+  const getRegister = (name) => {
+    switch (name) {
+      case 'username': {
+        return register({
+          required: 'Username required'
+        })
+      }
+      case 'email': {
+        return register({
+          required: 'E-mail required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            message: 'Enter a valid email address'
+          }
+        })
+      }
+      case 'password':
+      case 'second password': {
+        return register({
+          value: /.+/i,
+          required: 'Password required'
+        })
+      }
+      default:
+        break
+    }
+    return ''
+  }
 
   return (
     <div className="mb-3">
@@ -18,25 +65,21 @@ const FormInput = (props) => {
       <input
         className={`shadow appearance-none border border-${borderColor} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
         id={`id-${title}`}
+        autoComplete="off"
         type={type}
+        name={name}
         placeholder={placeholder}
-        value={value}
-        onChange={(event) => {
-          setValue(event.target.value)
-          if (type === 'password') {
-            dispatch(action(event.target.value))
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            event.preventDefault()
-            dispatch(action(value))
-          }
+        onChange={() => {
+          onChange(name)
         }}
         onBlur={() => {
-          dispatch(action(value))
+          onBlur(name)
         }}
+        ref={getRegister(name)}
       />
+      <span className="text-xs text-red-400">
+        {errors[name] && errors[name].message}
+      </span>
     </div>
   )
 }
