@@ -1,18 +1,10 @@
-import jwt from 'jsonwebtoken'
 import { nanoid } from 'nanoid'
-import Account from '../model/Account.model'
-import Transactions from '../model/Transactions.model'
+import { loginServices, regServices, accountDataServices } from '../services/db'
 
 import config from '../config'
 import { STARTING_BALANCE } from '../../client/constants/main'
 
 export async function registration(req, res) {
-  const account = await Account.findOne({ email: req.body.email })
-
-  if (account !== null) {
-    res.status(400).send('A user with that email already exists')
-  }
-
   if (
     (!req.body.username && !req.body.password) ||
     !req.body.username ||
@@ -21,25 +13,26 @@ export async function registration(req, res) {
     res.status(400).send('You must send username and password')
   }
 
+  const account = await regServices.findAccount(req.body.email)
+
+  if (account !== null) {
+    res.status(400).send('A user with that email already exists')
+  }
+
   const transactionToken = nanoid()
 
-  const newAccount = new Account({
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
+  const newAccount = regServices.createAccountInstance(
+    req.body.username,
+    req.body.email,
+    req.body.password,
     transactionToken
-  })
-  newAccount.save()
+  )
 
-  const newTransaction = new Transactions({
-    transactionToken,
-    currentBalance: STARTING_BALANCE
-  })
-
-  newTransaction.save()
+  regServices.createTransactionInstance(transactionToken, STARTING_BALANCE)
 
   const payload = { uid: newAccount.id }
-  const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
+  const token = regServices.createToken(payload, config.secret)
+
   delete newAccount.password
   res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
   res.send({ token, user: newAccount })
@@ -55,11 +48,11 @@ export async function login(req, res) {
   }
 
   try {
-    const account = await Account.findAndValidateAccount(req.body)
-
+    const account = await loginServices.validateAccount(req.body)
     const payload = { uid: account.id }
-    const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
+    const token = regServices.createToken(payload, config.secret)
     delete account.password
+
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.send({ token, user: account })
   } catch (err) {
@@ -69,11 +62,14 @@ export async function login(req, res) {
 
 export async function getAccountData(req, res) {
   try {
-    const jwtAccount = jwt.verify(req.cookies.token, config.secret)
-    const account = await Account.findById(jwtAccount.uid)
-
+    const jwtAccount = accountDataServices.verifyAccount(
+      req.cookies.token,
+      config.secret
+    )
+    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
     const payload = { uid: account.id }
-    const token = jwt.sign(payload, config.secret, { expiresIn: '48h' })
+    const token = regServices.createToken(payload, config.secret)
+
     delete account.password
     res.cookie('token', token, { maxAge: 1000 * 60 * 60 * 48 })
     res.send({ token, user: account })

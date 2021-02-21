@@ -2,11 +2,17 @@ import jwt from 'jsonwebtoken'
 import Account from '../model/Account.model'
 import Transactions from '../model/Transactions.model'
 import config from '../config'
+import {
+  regServices,
+  loginServices,
+  accountDataServices,
+  transactionsServices
+} from '../services/db'
 
 export async function getUsers(req, res) {
   try {
-    jwt.verify(req.cookies.token, config.secret)
-    const users = await Account.find({})
+    accountDataServices.verifyAccount(req.cookies.token, config.secret)
+    const users = await transactionsServices.findUsers()
     res.json(users)
   } catch (err) {
     res.json({ status: 'error', err })
@@ -15,22 +21,25 @@ export async function getUsers(req, res) {
 
 export async function createTransaction(req, res) {
   try {
-    const jwtAccount = jwt.verify(req.cookies.token, config.secret)
+    const jwtAccount = accountDataServices.verifyAccount(
+      req.cookies.token,
+      config.secret
+    )
+    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
 
-    const account = await Account.findById(jwtAccount.uid)
     if (account === null) {
       throw new Error('Account not found')
     }
 
-    let accountTransactions = await Transactions.findOne({
-      transactionToken: account.transactionToken
-    })
-
-    const recipient = await Account.findById(req.body.recipientId)
-
-    const recipientTransactions = await Transactions.findOne({
-      transactionToken: recipient.transactionToken
-    })
+    let accountTransactions = await transactionsServices.findTransaction(
+      account.transactionToken
+    )
+    const recipient = await accountDataServices.findAccoutById(
+      req.body.recipientId
+    )
+    const recipientTransactions = await transactionsServices.findTransaction(
+      recipient.transactionToken
+    )
 
     if (Number(req.body.amount) < Number(accountTransactions.currentBalance)) {
       const newRecipientBalance =
@@ -39,42 +48,25 @@ export async function createTransaction(req, res) {
       const newAccountBalance =
         Number(accountTransactions.currentBalance) - Number(req.body.amount)
 
-      await Transactions.updateOne(
-        { transactionToken: recipientTransactions.transactionToken },
-        {
-          $set: { currentBalance: newRecipientBalance },
-          $push: {
-            payments: {
-              recipientId: recipient._id,
-              date: new Date(),
-              recipientUsername: recipient.username,
-              amount: req.body.amount,
-              balance: newRecipientBalance
-            }
-          }
-        },
-        { upsert: false }
-      )
-      await Transactions.updateOne(
-        { transactionToken: accountTransactions.transactionToken },
-        {
-          $set: { currentBalance: newAccountBalance },
-          $push: {
-            payments: {
-              recipientId: recipient._id,
-              date: new Date(),
-              recipientUsername: recipient.username,
-              amount: req.body.amount,
-              balance: newAccountBalance
-            }
-          }
-        },
-        { upsert: false }
+      await transactionsServices.updateTransaction(
+        recipientTransactions.transactionToken,
+        newRecipientBalance,
+        recipient._id,
+        recipient.username,
+        req.body.amount
       )
 
-      accountTransactions = await Transactions.findOne({
-        transactionToken: account.transactionToken
-      })
+      await transactionsServices.updateTransaction(
+        accountTransactions.transactionToken,
+        newAccountBalance,
+        recipient._id,
+        recipient.username,
+        req.body.amount
+      )
+
+      accountTransactions = await transactionsServices.findTransaction(
+        account.transactionToken
+      )
     } else {
       res.status(400).send('Balance exceeded')
     }
@@ -96,14 +88,20 @@ export async function createTransaction(req, res) {
 
 export async function getUserTransactionsList(req, res) {
   try {
-    const jwtAccount = jwt.verify(req.cookies.token, config.secret)
-    const account = await Account.findById(jwtAccount.uid)
+    const jwtAccount = accountDataServices.verifyAccount(
+      req.cookies.token,
+      config.secret
+    )
+    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
+
     if (account === null) {
       throw new Error('Account not found')
     }
-    const accountTransactions = await Transactions.findOne({
-      transactionToken: account.transactionToken
-    })
+
+    const accountTransactions = await transactionsServices.findTransaction(
+      account.transactionToken
+    )
+
     res.json(accountTransactions)
   } catch (err) {
     if (err.name === 'JsonWebTokenError') {
