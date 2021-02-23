@@ -62,11 +62,11 @@ export async function login(req, res) {
 
 export async function getAccountData(req, res) {
   try {
-    const jwtAccount = accountDataServices.verifyAccount(
-      req.cookies.token,
-      config.secret
-    )
-    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
+    // const jwtAccount = accountDataServices.verifyAccount(
+    //   req.cookies.token,
+    //   config.secret
+    // )
+    const account = await accountDataServices.findAccoutById(req.account.uid)
     const payload = { uid: account.id }
     const token = regServices.createToken(payload, config.secret)
 

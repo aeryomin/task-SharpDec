@@ -12,6 +12,7 @@ import passportJWT from './services/passport'
 import config from './config'
 import authRoutes from './routes/api/auth.routes'
 import transactionsRoutes from './routes/api/transactions.routes'
+import authValidation from './middleware/authValidation'
 
 mongooseService.connect()
 
@@ -41,7 +42,7 @@ middleware.forEach((item) => app.use(item))
 passport.use('jwt', passportJWT.jwt)
 
 app.use('/api/v1/auth', authRoutes)
-app.use('/api/v1/transactions', transactionsRoutes)
+app.use('/api/v1/transactions', authValidation, transactionsRoutes)
 
 if (config.isSocketsEnabled) {
   io.on('connection', (socket) => {

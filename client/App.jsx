@@ -8,7 +8,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import './main.scss'
 import store, { history } from './redux'
 import Startup from './startup'
-// import Home from './pages/presentational/Home'
 import LoginForm from './pages/forms/LoginForm'
 import RegistrationForm from './pages/forms/RegistrationForm'
 import Main from './pages/presentational/Main/Main'
@@ -47,7 +46,6 @@ const App = () => {
           <ConnectedRouter history={history}>
             <Startup>
               <Switch>
-                {/* <Route exact path="/" component={() => <Home />} /> */}
                 <Route
                   exact
                   path="/reg"

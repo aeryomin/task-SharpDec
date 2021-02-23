@@ -1,17 +1,10 @@
-import jwt from 'jsonwebtoken'
-import Account from '../model/Account.model'
-import Transactions from '../model/Transactions.model'
-import config from '../config'
 import {
-  regServices,
-  loginServices,
   accountDataServices,
   transactionsServices
 } from '../services/db'
 
 export async function getUsers(req, res) {
   try {
-    accountDataServices.verifyAccount(req.cookies.token, config.secret)
     const users = await transactionsServices.findUsers()
     res.json(users)
   } catch (err) {
@@ -21,11 +14,7 @@ export async function getUsers(req, res) {
 
 export async function createTransaction(req, res) {
   try {
-    const jwtAccount = accountDataServices.verifyAccount(
-      req.cookies.token,
-      config.secret
-    )
-    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
+    const account = await accountDataServices.findAccoutById(req.account.uid)
 
     if (account === null) {
       throw new Error('Account not found')
@@ -88,11 +77,7 @@ export async function createTransaction(req, res) {
 
 export async function getUserTransactionsList(req, res) {
   try {
-    const jwtAccount = accountDataServices.verifyAccount(
-      req.cookies.token,
-      config.secret
-    )
-    const account = await accountDataServices.findAccoutById(jwtAccount.uid)
+    const account = await accountDataServices.findAccoutById(req.account.uid)
 
     if (account === null) {
       throw new Error('Account not found')
@@ -104,9 +89,6 @@ export async function getUserTransactionsList(req, res) {
 
     res.json(accountTransactions)
   } catch (err) {
-    if (err.name === 'JsonWebTokenError') {
-      res.status(401).send('Unauthorized Error')
-    }
     if (err.message === 'Account not found') {
       res.status(401).send('Invalid user')
     }
